@@ -21,6 +21,6 @@ from recipes import views as recipes_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('recipes.urls'), name='home'),
-
+    path("accounts/", include("allauth.urls")),
 
 ]
