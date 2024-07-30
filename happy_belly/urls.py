@@ -20,6 +20,7 @@ from recipes import views as recipes_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', recipes_views.home, name='home'),
+    path('', include('recipes.urls'), name='home'),
+
 
 ]
