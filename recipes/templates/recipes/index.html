@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Include Bootstrap CSS for styling -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+</head>
+<body>
+    <div class="container">
+        <!-- Display messages -->
+        {% if messages %}
+            <div class="mt-3">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        <!-- Your other content here -->
+    </div>
+    <h1>Homepage</h1>
+        {% if request.user.is_superuser %}
+            <a href="{% url 'create' %}" class="btn btn-success">Create new recipe</a>
+        {% endif %}
+
+        {% for recipe in recipes %}
+        <div class="card" style="width: 50%;">
+            <img src="{{ recipe.image }}" class="card-img-top">
+            <div class="card-body">
+              <h5 class="card-title">{{ recipe.title }}</h5>
+              <p class="card-text">{{ recipe.description|truncatechars:100 }}</p>
+              <a href="{% url 'read' recipe.id %}" class="btn btn-primary">Read more</a>
+              {% if recipe.user == request.user %}
+                <a href="{% url 'edit' recipe.id %}" class="btn btn-dark">Edit recipe</a>
+                <a href="{% url 'delete' recipe.id %}" class="btn btn-danger">Delete recipe</a>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+
+
+
+    <!-- Include Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

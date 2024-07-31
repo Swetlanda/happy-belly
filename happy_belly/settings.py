@@ -49,6 +49,9 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'cloudinary_storage', 
     'cloudinary',
+    'crispy_forms',
+    'crispy_bootstrap4',
+    'taggit',
     'recipes',
 ]
 
@@ -67,6 +70,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
 ]
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
+CRISPY_TEMPLATE_PACK = "bootstrap4"  
 
 ROOT_URLCONF = 'happy_belly.urls'
 
