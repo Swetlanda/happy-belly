@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center">Welcome, {{ user.username }}!</h1>
+    <p class="text-center">We're glad to have you back at Happy Belly Recipes.</p>
+
+    <!-- Additional content for logged-in users -->
+    <div class="row mt-4">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Create New Recipe</h5>
+                    <p class="card-text">Add your amazing recipes and share them with the community.</p>
+                    <a href="{% url 'create' %}" class="btn btn-primary">Add Recipe</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

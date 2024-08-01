@@ -33,6 +33,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['8000-swetlanda-happybelly-xmznebw305x.ws.codeinstitute-ide.net','.herokuapp.com']
 
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 # Application definition
 

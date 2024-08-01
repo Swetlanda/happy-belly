@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}All Recipes{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Simple Recipes for Happy Bellies</h1>
+
+    <!-- Recipe Cards -->
+    <div class="row">
+        {% for recipe in recipes %}
+        <div class="col-lg-3 col-md-6 col-sm-12 mb-3"> 
+            <div class="card">
+                <img src="{{ recipe.image.url }}" class="card-img-top" alt="{{ recipe.image_alt }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ recipe.title }}</h5>
+                    <p class="card-text">{{ recipe.description|truncatechars:100 }}</p>
+                    <div class="text-center">
+                        <a href="{% url 'read' recipe.id %}" class="btn btn-primary">View Recipe</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center">No recipes available at the moment.</p>
+        {% endfor %}
+    </div>
+
+    <!-- Load More Button -->
+    <div class="load-more-container text-center mt-3"> 
+        <button class="btn btn-primary">Load More</button>
+    </div>
+</div>
+{% endblock %}

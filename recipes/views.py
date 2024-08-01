@@ -5,16 +5,34 @@ from django.contrib import messages
 from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
 
-"""
-# Create your views here.
-class HomePage(TemplateView): 
+def homepage(request):
+    """
+    Displays the homepage. Redirects to welcome page if the user is logged in.
+    """
+    if request.user.is_authenticated:
+        return redirect('welcome')
+    return render(request, 'home.html')
 
-    template_name = 'index.html'
-"""
+@login_required
+def welcome_page(request):
+    """
+    Displays a welcome page for logged-in users.
+    """
+    return render(request, 'recipes/welcome.html', {'user': request.user})
+
+def recipe_list(request):
+    """
+    Displays all recipes.
+    """
+    all_recipes = Recipe.objects.all()
+    context = {
+        "recipes": all_recipes,
+    }
+    return render(request, 'recipes/recipe_list.html', context)
 
 def show_recipe(request, recipe_id):
     """
-    Displays recipe
+    Displays a single recipe.
     """
     retrieved_recipe = get_object_or_404(Recipe, id=recipe_id)
 
@@ -23,20 +41,10 @@ def show_recipe(request, recipe_id):
     }
     return render(request, 'recipes/view_recipe.html', context)
 
-def show_homepage(request):
-    """
-    Displays homepage with all recipes
-    """
-    all_recipes = Recipe.objects.all()
-    context = {
-        "recipes": all_recipes,
-    }
-    return render(request, 'recipes/index.html', context)
-
 @login_required
 def create_recipe(request):
     """
-    Create a new recipe (for logged-in users only)
+    Creates a new recipe for logged-in users.
     """
     if request.method == "POST":
         form = RecipeForm(request.POST)
@@ -54,7 +62,7 @@ def create_recipe(request):
 @login_required
 def edit_recipe(request, recipe_id):
     """
-    Edit an existing recipe (for logged-in users only)
+    Edits an existing recipe for logged-in users.
     """
     retrieved_recipe = get_object_or_404(Recipe, id=recipe_id)
 
@@ -79,7 +87,7 @@ def edit_recipe(request, recipe_id):
 @login_required           
 def delete_recipe(request, recipe_id):
     """
-    Delete an existing recipe (for logged-in users only)
+    Deletes an existing recipe for logged-in users.
     """
     retrieved_recipe = get_object_or_404(Recipe, id=recipe_id)
 
@@ -94,3 +102,19 @@ def delete_recipe(request, recipe_id):
     else:
         context = {"recipe": retrieved_recipe,}
         return render(request, 'recipes/delete_recipe.html', context)
+
+def recipe_search(request):
+    """
+    Search functionality for recipes.
+    """
+    query = request.GET.get('q')
+    if query:
+        recipes = Recipe.objects.filter(title__icontains=query)
+    else:
+        recipes = Recipe.objects.all()
+
+    context = {
+        'recipes': recipes,
+        'query': query,
+    }
+    return render(request, 'recipes/recipe_list.html', context)
