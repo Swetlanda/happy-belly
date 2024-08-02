@@ -1,24 +1,82 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block title %}{{ recipe.title }}{% endblock %}
 
 {% block content %}
 <div class="container mt-4">
     <div class="row">
-        <div class="col-md-8 offset-md-2">
-            <div class="card">
-                <img src="{{ recipe.image.url }}" class="card-img-top" alt="{{ recipe.image_alt }}">
-                <div class="card-body">
-                    <h3 class="card-title">{{ recipe.title }}</h3>
-                    <p class="card-text">{{ recipe.description }}</p>
-                    <h4>Ingredients</h4>
-                    <p>{{ recipe.ingredients }}</p>
-                    <h4>Instructions</h4>
-                    <p>{{ recipe.instructions }}</p>
-                </div>
+        <div class="col-lg-12">
+            <!-- Recipe Title -->
+            <h1 class="mb-3">{{ recipe.title }}</h1>
+            
+            <!-- Recipe Description -->
+            <p class="lead mb-4">{{ recipe.description }}</p>
+            
+            <!-- Posted by User and Date -->
+            <p class="text-muted mb-2">Posted by {{ recipe.user }} on {{ recipe.created_on|date:"F j, Y" }}</p>
+            
+            <!-- Tags -->
+            <div class = "mb-4">
+                {% for tag in recipe.tags.all %}
+                <span class="badge badge-primary">{{ tag.name }}</span>
+                {% endfor %}
+            </div>
+        </div>
+
+    <!-- Recipe Image -->
+    <div class="row">
+        <div class="col-12">
+            <div class="mb-4 text-center">
+                {% if recipe.image %}
+                <img src="{{ recipe.image.url }}" class="img-fluid rounded" alt="{{ recipe.image_alt }}">
+                {% else %}
+                <img src="{% static 'images/default.jpg' %}" class="img-fluid rounded" alt="Default Image">
+                {% endif %}
             </div>
         </div>
     </div>
-    <a href="{% url 'home' %}">Homepage</a>
+
+    <!-- Servings and Action Buttons -->
+    <div class="row mb-4">
+        <div class="col-lg-6">
+            <!-- Servings -->
+            <p class="font-weight-bold">Servings: <span>{{ recipe.get_serving_display }}</span></p>
+        </div>
+
+        <div class="col-lg-6 text-end">
+            <!-- Action Buttons -->
+            {% if request.user == recipe.user %}
+            <a href="{% url 'edit_recipe' recipe.id %}" class="btn btn-warning me-2">Edit</a>
+            <a href="{% url 'delete_recipe' recipe.id %}" class="btn btn-danger me-2">Delete</a>
+            {% endif %}
+            <button class="btn btn-primary">Favorite</button>
+        </div>
+    </div>
+    
+    <!-- Ingredients and Instructions -->
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="content-box">
+                <h3 class="mb-3">Ingredients</h3>
+                <ul class="list-unstyled">
+                    {% for ingredient in recipe.ingredients.splitlines %}
+                    <li class="ingredient-item">{{ ingredient }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="content-box">
+                <h3 class="mb-3">Instructions</h3>
+                <ol class="list-unstyled">
+                    {% for instruction in recipe.instructions.splitlines %}
+                    <li class="instruction-item">{{ instruction }}</li>
+                    {% endfor %}
+                </ol>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

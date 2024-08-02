@@ -1,21 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Recipe</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}Edit Recipe{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Edit Recipe</h1>
     <form method="POST">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Edit</button>
+        <div class="form-group">
+            {{ form.as_p }}
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            {% if recipe.user == request.user %}
+                <a href="{% url 'delete_recipe' recipe.id %}" class="btn btn-danger">Delete Recipe</a>
+            {% endif %}
+        </div>
     </form>
-    
-    {% if recipe.user == request.user %}
-        <a href="{% url 'delete' recipe.id %}" class="btn btn-danger">Delete recipe</a>
-    {% endif %}
-
-
-</body>
-</html>
+</div>
+{% endblock %}

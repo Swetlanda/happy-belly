@@ -267,11 +267,6 @@ main {
     position: relative;  
 }
 
-/* Load more button container */
-.pagination-container {
-    margin-top: 20px;
-}
-
 /* Pagnation controls style */
 .pagination .page-item .page-link {
     color: var(--primary-dark-green);
@@ -290,4 +285,17 @@ main {
     background-color: var(--accent-dark-violet);
     color: white;
     border-color: var(--accent-dark-violet);
+}
+
+/* Style tags on Recipe list page */
+.badge-primary {
+    background-color: var(--primary-dark-green); 
+    color: white;
+    margin-right: 5px;
+}
+
+.badge-secondary {
+    background-color: var(--primary-dark-green); 
+    color: white;
+    margin-right: 5px;
 }

@@ -33,7 +33,7 @@ def welcome_page(request):
     """
     return render(request, 'recipes/welcome.html', {'user': request.user})
 
-def show_recipe(request, recipe_id):
+def view_recipe(request, recipe_id):
     """
     Displays a single recipe.
     """
@@ -50,17 +50,20 @@ def create_recipe(request):
     Creates a new recipe for logged-in users.
     """
     if request.method == "POST":
-        form = RecipeForm(request.POST)
+        form = RecipeForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            recipe = form.save(commit=False)
+            recipe.user = request.user
+            recipe.save()  
             messages.success(request, "Your recipe was sussessfully created!")
-            return redirect("home")
+            return redirect("recipe_list")
         else:
             messages.error(request, "There was an error in your form submission. Please try again.")
     else:
         form = RecipeForm()
-        context = {"form": form, }
-        return render(request, 'recipes/create_recipe.html', context)
+    
+    context = {"form": form, }
+    return render(request, 'recipes/create_recipe.html', context)
 
 @login_required
 def edit_recipe(request, recipe_id):
@@ -78,7 +81,7 @@ def edit_recipe(request, recipe_id):
         if form.is_valid():
             form.save()
             messages.success(request, "Your recipe was updated!")
-            return redirect("home")
+            return redirect('view_recipe', recipe_id=recipe.id)
         else:
             messages.error(request, "There was an error in your form submission. Please try again.")
         

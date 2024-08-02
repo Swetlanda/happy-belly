@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block title %}Simple Recipes for Happy Bellies{% endblock %}
 
 {% block content %}
@@ -10,13 +12,25 @@
     <div class="row">
         {% for recipe in recipes %}
         <div class="col-lg-3 col-md-6 col-sm-12 mb-3"> 
-            <div class="card">
-                <img src="{{ recipe.image.url }}" class="card-img-top" alt="{{ recipe.image_alt }}">
+            <div class="card h-100">
+                <div class="image-container">
+                    {% if not recipe.image %}
+                    <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="Default Image">
+                    {% else %}
+                    <img src="{{ recipe.image.url }}" class="card-img-top" alt="{{ recipe.image_alt }}">
+                    {% endif %}
+                </div>
                 <div class="card-body">
                     <h5 class="card-title">{{ recipe.title }}</h5>
                     <p class="card-text">{{ recipe.description|truncatechars:100 }}</p>
+                    <p class="text-muted"><em>By {{ recipe.user.username }}</em></p>
+                    <p class="text-muted">
+                        {% for tag in recipe.tags.all %}
+                            <span class="badge badge-secondary">{{ tag.name }}</span>
+                        {% endfor %}
+                    </p>
                     <div class="text-center">
-                        <a href="{% url 'read' recipe.id %}" class="btn btn-primary">View Recipe</a>
+                        <a href="{% url 'view_recipe' recipe.id %}" class="btn btn-primary">View Recipe</a>
                     </div>
                 </div>
             </div>
