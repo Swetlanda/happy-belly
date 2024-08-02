@@ -1,0 +1,293 @@
+/* Color variables based on the palette */
+:root {
+    --primary-light-green: #a6cc99;  /* Light green for backgrounds */
+    --primary-medium-green: #629a74; /* Medium green for buttons and nav */
+    --primary-dark-green: #3e612d;   /* Dark green for text and borders */
+    --accent-dark-violet: #572c48;   /* Dark violet for accenting elements */
+    --accent-pink: #c65792;          /* Pink for hover states and highlights */
+}
+
+/* General styling */
+body {
+    background-color: var(--primary-light-green);
+    color: var(--primary-dark-green);
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;  
+    padding: 0; 
+}
+
+/* Navbar */
+.navbar {
+    background-color: var(--primary-medium-green);
+    padding: 1.2rem 2rem; 
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.1rem;
+}
+
+.navbar-brand {
+    color: white !important;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.navbar-nav {
+    margin-left: auto;
+}
+
+.navbar-nav .nav-link {
+    color: white !important;
+    margin-left: 1rem;
+    transition: color 0.3s ease, border-radius 0.3s ease, background-color 0.3s ease;
+    border-radius: 0; 
+}
+
+.navbar-nav .nav-link:hover, .navbar-nav .nav-link.active {
+    background-color: var(--accent-dark-violet); 
+    color: var(--primary-light-green) !important; 
+    border-radius: 10px; 
+}
+
+.navbar-toggler {
+    border-color: white;
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='white' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+/* Search Button */
+.btn-outline-success {
+    color: white;
+    border-color: white;
+    transition: background-color 0.3s ease, color 0.3s ease, border-radius 0.3s ease;
+}
+
+.btn-outline-success:hover, .btn-outline-success:focus {
+    background-color: white;
+    color: var(--primary-medium-green);
+    border-radius: 15px; 
+}
+
+/* Main Banner */
+.jumbotron {
+    position: relative;
+    background-size: cover;
+    color: var(--primary-light-green);
+    padding: 7em 2rem; 
+    border-radius: 15px;
+    background-image: url('{% static "images/banner.jpg" %}'); /* This should be in the HTML or handled by Django */
+    font-family: 'Bodoni Moda', serif;
+    text-align: center;
+}
+
+/* Overlay Layer */
+.jumbotron::before {
+    content: ""; 
+    position: absolute; 
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(87, 44, 72, 0.3); 
+    border-radius: 15px; 
+    z-index: 1; 
+}
+
+/* Text Inside Banner */
+.jumbotron h1,
+.jumbotron p,
+.jumbotron .btn {
+    position: relative; 
+    z-index: 2; 
+}
+
+.jumbotron h1 {
+    font-size: 4rem; 
+    color: white; 
+    font-weight: bold;
+}
+
+.jumbotron p {
+    font-size: 1.5rem;
+    color: white; 
+}
+
+.jumbotron .btn {
+    background-color: var(--accent-pink);
+    border: var(--accent-pink);
+    color: white;
+    font-weight: bold;
+    border-radius: 10px; 
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.jumbotron .btn:hover {
+    background-color: var(--accent-dark-violet);
+    color: white;
+}
+
+/* Cards */
+.card {
+    margin-top: 1rem;
+    border: 1px solid var(--primary-medium-green); 
+    background-color: white; 
+    font-family: 'Montserrat', sans-serif;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+    border-radius: 10px; 
+}
+
+.card-title {
+    color: var(--accent-pink); 
+    font-family: 'Bodoni Moda', serif;
+    font-weight: bold;
+}
+
+.card-text {
+    color: var(--primary-dark-green);
+}
+
+.col-lg-3, .col-md-6, .col-sm-12 {
+    margin-bottom: 0.5rem; 
+}
+
+.text-center.mt-2 {
+    margin-top: 1rem; 
+}
+
+/* Footer */
+.footer {
+    background-color: var(--primary-medium-green);
+    color: var(--primary-light-green); 
+    padding: 20px 0; 
+    text-align: center; 
+    font-family: 'Montserrat', sans-serif; 
+}
+
+.footer a {
+    color: var(--accent-pink);
+    transition: color 0.3s ease-in-out, border-radius 0.3s ease;
+    border-radius: 5px; 
+    text-decoration: none;
+}
+
+.footer a:hover {
+    color: var(--primary-dark-green);
+    border-radius: 10px; 
+}
+
+.footer i {
+    color: var(--accent-pink); 
+    font-size: 1.2rem; 
+    margin: 0 10px; 
+    transition: color 0.3s ease; 
+}
+
+.footer i:hover {
+    color: var(--primary-dark-green); 
+}
+
+.footer p {
+    margin: 10px 0; 
+    color: var(--primary-light-green); 
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Bodoni Moda', serif;
+    color: var(--primary-dark-green);
+}
+
+p {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--primary-dark-green);
+}
+
+/* Flash Messages */
+.alert-success {
+    background-color: var(--primary-medium-green);
+    border-color: var(--primary-medium-green);
+    color: var(--primary-light-green);
+    border-radius: 10px; 
+}
+
+.alert-danger {
+    background-color: var(--accent-dark-violet);
+    border-color: var(--accent-dark-violet);
+    color: var(--primary-light-green);
+    border-radius: 10px; 
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--primary-medium-green); 
+    border-color: var(--primary-medium-green);
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    border-radius: 10px; 
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-dark-violet); 
+    border-color: var(--accent-dark-violet);
+    color: white;
+}
+
+/* Adjust main and message elements */
+.flex-shrink-0 {
+    padding-top: 0 !important;  
+    padding-bottom: 0 !important;  
+}
+
+p.logged-in-message {
+    margin: 0 !important;  
+    padding: 0 !important; 
+    line-height: 1 !important; 
+    color: var(--primary-dark-green);
+    font-size: 0.9rem;  
+    font-family: 'Montserrat', sans-serif;
+    display: inline-block;
+    position: absolute;  
+    top: 0;  
+    right: 20px;  
+    z-index: 10; 
+    text-align: right;  
+}
+
+/* Adjust container */
+main {
+    margin: 0 !important; 
+    padding: 0 !important; 
+    position: relative;  
+}
+
+/* Load more button container */
+.pagination-container {
+    margin-top: 20px;
+}
+
+/* Pagnation controls style */
+.pagination .page-item .page-link {
+    color: var(--primary-dark-green);
+    border: 1px solid var(--primary-medium-green);
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--primary-medium-green);
+    border-color: var(--primary-medium-green);
+    color: white;
+}
+
+.pagination .page-item .page-link:hover {
+    background-color: var(--accent-dark-violet);
+    color: white;
+    border-color: var(--accent-dark-violet);
+}
