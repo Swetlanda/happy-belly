@@ -1,9 +1,22 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.views.generic import ListView, TemplateView
+from django.views import generic
 from .models import Recipe
 from .forms import RecipeForm
 from django.contrib import messages
-from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
+
+class RecipeListView(generic.ListView):
+    """
+    Displays all recipes with pagination.
+    """
+    model = Recipe
+    template_name = 'recipes/recipe_list.html'  
+    context_object_name = 'recipes'
+    paginate_by = 8
+
+    def get_queryset(self):
+        return Recipe.objects.filter(status=1)  
 
 def homepage(request):
     """
@@ -19,16 +32,6 @@ def welcome_page(request):
     Displays a welcome page for logged-in users.
     """
     return render(request, 'recipes/welcome.html', {'user': request.user})
-
-def recipe_list(request):
-    """
-    Displays all recipes.
-    """
-    all_recipes = Recipe.objects.all()
-    context = {
-        "recipes": all_recipes,
-    }
-    return render(request, 'recipes/recipe_list.html', context)
 
 def show_recipe(request, recipe_id):
     """

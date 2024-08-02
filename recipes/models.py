@@ -36,6 +36,8 @@ class Recipe(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
    
+    class Meta:
+        ordering = ["created_on"]
 
     def __str__(self):
         return f'"{self.title}" by {self.user}'
@@ -45,8 +47,6 @@ class Recipe(models.Model):
 def populate_slug(sender, instance, **kwargs):
     """
     This function automatically generates a slug from the recipe title using the slugify function if the slug field is empty. 
-    The slugify function converts the title into a URL-friendly slug. 
-    The generated slug is then assigned back to the instance's slug field.
     """
     if not instance.slug:
         instance.slug = slugify(instance.title)

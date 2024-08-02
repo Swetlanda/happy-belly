@@ -268,7 +268,26 @@ main {
 }
 
 /* Load more button container */
-.load-more-container {
-    margin-top: 0;  
-    margin-bottom: 1rem;  
+.pagination-container {
+    margin-top: 20px;
+}
+
+/* Pagnation controls style */
+.pagination .page-item .page-link {
+    color: var(--primary-dark-green);
+    border: 1px solid var(--primary-medium-green);
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--primary-medium-green);
+    border-color: var(--primary-medium-green);
+    color: white;
+}
+
+.pagination .page-item .page-link:hover {
+    background-color: var(--accent-dark-violet);
+    color: white;
+    border-color: var(--accent-dark-violet);
 }

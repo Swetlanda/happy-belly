@@ -19,8 +19,9 @@ from django.urls import path, include
 from recipes import views 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('', views.homepage, name='home'),
-    path('recipes/', include('recipes.urls')),
+    path('admin/', admin.site.urls),
     path("accounts/", include("allauth.urls")),
+    path('recipes/', include('recipes.urls')),
+    path('summernote/', include('django_summernote.urls')),
 ]

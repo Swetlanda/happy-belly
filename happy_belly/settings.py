@@ -33,9 +33,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['8000-swetlanda-happybelly-xmznebw305x.ws.codeinstitute-ide.net','.herokuapp.com']
 
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -54,6 +51,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap4',
     'taggit',
+    'django_summernote',
     'recipes',
 ]
 
@@ -151,9 +149,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
-
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
