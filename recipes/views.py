@@ -5,6 +5,8 @@ from .models import Recipe
 from .forms import RecipeForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from cloudinary.uploader import upload
+
 
 class RecipeListView(generic.ListView):
     """
@@ -81,14 +83,15 @@ def edit_recipe(request, recipe_id):
         if form.is_valid():
             form.save()
             messages.success(request, "Your recipe was updated!")
-            return redirect('view_recipe', recipe_id=recipe.id)
+            return redirect('view_recipe', recipe_id=retrieved_recipe.id)
         else:
             messages.error(request, "There was an error in your form submission. Please try again.")
         
     else:
         form = RecipeForm(instance=retrieved_recipe)
-        context = {"form": form, "recipe": retrieved_recipe}
-        return render(request, 'recipes/edit_recipe.html', context)
+    
+    context = {"form": form, "recipe": retrieved_recipe}
+    return render(request, 'recipes/edit_recipe.html', context)
 
 @login_required           
 def delete_recipe(request, recipe_id):
