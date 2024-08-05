@@ -18,3 +18,11 @@ class RecipeForm(forms.ModelForm):
             'image_alt',
             'serving',
         ]
+    preview = forms.BooleanField(widget=forms.HiddenInput, required=False, initial=False)
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        if commit:
+            instance.save()
+            self.save_m2m()
+        return instance

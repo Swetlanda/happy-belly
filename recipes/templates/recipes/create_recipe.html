@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+
 {% load static %}
 
 {% block title %}Create Recipe{% endblock %}
@@ -12,7 +13,8 @@
             {{ form.as_p }}
         </div>
         <div class="text-center">
-            <button type="submit" class="btn btn-primary">Create Recipe</button>
+            <button type="submit" name="preview" class="btn btn-warning">Preview Recipe</button>
+            <button type="submit" class="btn btn-primary">Submit Recipe</button>
         </div>
     </form>
 </div>

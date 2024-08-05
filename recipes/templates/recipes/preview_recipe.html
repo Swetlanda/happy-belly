@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Preview Recipe{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-3">{{ preview_data.title }}</h1>
+
+    <!-- Recipe Description -->
+    <p class="lead">{{ preview_data.description }}</p>
+
+    <!-- Recipe Ingredients -->
+    <h3>Ingredients</h3>
+    <ul>
+        {% for ingredient in preview_data.ingredients.splitlines %}
+        <li>{{ ingredient }}</li>
+        {% endfor %}
+    </ul>
+
+    <!--  Recipe Instructions -->
+    <h3>Instructions</h3>
+    <ol>
+        {% for instruction in preview_data.instructions.splitlines %}
+        <li>{{ instruction }}</li>
+        {% endfor %}
+    </ol>
+
+    <!-- Recipe Tags -->
+    <div class="mb-4">
+        {% for tag in preview_data.tags %}
+        <span class="badge badge-primary">{{ tag }}</span>
+        {% endfor %}
+    </div>
+
+    <!-- Recipe Image -->
+    <div class="mb-4 text-center">
+        {% if preview_data.image %}
+        <img src="{{ preview_data.image }}" class="img-fluid rounded" alt="Recipe Image">
+        {% else %}
+        <img src="{% static 'images/default.jpg' %}" class="img-fluid rounded" alt="Default Image">
+        {% endif %}
+    </div>
+
+    <!-- Recipe Servings -->
+    <p class="font-weight-bold">Servings: <span>{{ preview_data.serving }}</span></p>
+
+        <!-- Confirm and Edit Buttons -->
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success">Submit Recipe for Approval</button>
+        <a href="{% url 'create_recipe' %}" class="btn btn-secondary">Edit Again</a>
+    </form>
+</div>
+{% endblock %}
