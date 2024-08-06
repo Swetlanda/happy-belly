@@ -51,7 +51,16 @@
             <a href="{% url 'edit_recipe' recipe.id %}" class="btn btn-warning me-2">Edit</a>
             <a href="{% url 'delete_recipe' recipe.id %}" class="btn btn-danger me-2">Delete</a>
             {% endif %}
-            <button class="btn btn-primary">Favorite</button>
+            {% if request.user.is_authenticated %}
+                <form method="post" class="d-inline">
+                    {% csrf_token %}
+                    {% if is_favorite %}
+                        <button type="submit" name="remove_from_favorites" class="btn btn-danger">Remove from Favorites</button>
+                    {% else %}
+                        <button type="submit" name="add_to_favorites" class="btn btn-primary">Add to Favorites</button>
+                    {% endif %}
+                </form>
+            {% endif %}
         </div>
     </div>
     

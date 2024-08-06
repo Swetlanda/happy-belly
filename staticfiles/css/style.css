@@ -162,7 +162,7 @@ body {
 /* Form Titles */
 .card-header.bg-primary.text-white.text-center {
     background-color: var(--primary-medium-green) !important;
-    color: var(--primary-light-green) !important;
+    color: white !important;
 }
 
 /* Footer */

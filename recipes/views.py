@@ -1,11 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, TemplateView
 from django.views import generic
-from .models import Recipe
+from .models import Recipe, Favorite
 from .forms import RecipeForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from cloudinary.uploader import upload
+from django.db.models import Count
 
 
 class RecipeListView(generic.ListView):
@@ -37,13 +38,31 @@ def welcome_page(request):
 
 def view_recipe(request, recipe_id):
     """
-    Displays a single recipe.
+    Displays a single recipe and allows for adding/removing from favorites (for logged-in users).
     """
     retrieved_recipe = get_object_or_404(Recipe, id=recipe_id)
+    
+    # Check if the user has added the recipe to favorites
+    is_favorite = False
+    if request.user.is_authenticated:
+        is_favorite = Favorite.objects.filter(user=request.user, recipe=retrieved_recipe).exists()
+
+    # Add/remove favorites
+    if request.method == "POST":
+        if request.user.is_authenticated:
+            if 'add_to_favorites' in request.POST:
+                return add_to_favorites(request, recipe_id)
+            elif 'remove_from_favorites' in request.POST:
+                return remove_from_favorites(request, recipe_id)
+        else:
+            messages.error(request, "You need to be logged in to add recipes to favorites.")
+            return redirect('account_login')
 
     context = {
         "recipe": retrieved_recipe,
+        "is_favorite": is_favorite,
     }
+
     return render(request, 'recipes/view_recipe.html', context)
 
 @login_required
@@ -105,7 +124,7 @@ def recipe_preview(request, recipe_id):
             messages.info(request, "Continuing to edit the recipe.")
             return redirect('edit_recipe', recipe_id=recipe.id)
 
-    return render(request, 'recipes/preview_recipe.html', {'preview_data': preview_data})
+    return render(request, 'recipes/recipe_preview.html', {'preview_data': preview_data})
 
 @login_required
 def edit_recipe(request, recipe_id):
@@ -188,3 +207,42 @@ def recipe_search(request):
         'query': query,
     }
     return render(request, 'recipes/recipe_list.html', context)
+
+@login_required
+def my_recipes(request):
+    """
+    Display all recipes created by the current user.
+    """
+    user_recipes = Recipe.objects.filter(user=request.user, status=1)
+    return render(request, 'recipes/my_recipes.html', {'recipes': user_recipes})
+
+@login_required
+def my_favorites(request):
+    """
+    Display all recipes that the current user has added to favorites.
+    """
+    favorite_recipes = Favorite.objects.filter(user=request.user).select_related('recipe')
+    return render(request, 'recipes/my_favorites.html', {'favorites': favorite_recipes})
+
+@login_required
+def add_to_favorites(request, recipe_id):
+    """
+    Add a recipe to the user's favorites.
+    """
+    recipe = get_object_or_404(Recipe, id=recipe_id)
+    favorite, created = Favorite.objects.get_or_create(user=request.user, recipe=recipe)
+    if created:
+        messages.success(request, "Recipe added to your favorites.")
+    else:
+        messages.info(request, "Recipe is already in your favorites.")
+    return redirect('view_recipe', recipe_id=recipe.id)
+
+@login_required
+def remove_from_favorites(request, recipe_id):
+    """
+    Remove a recipe from the user's favorites.
+    """
+    recipe = get_object_or_404(Recipe, id=recipe_id)
+    Favorite.objects.filter(user=request.user, recipe=recipe).delete()
+    messages.success(request, "Recipe removed from your favorites.")
+    return redirect('view_recipe', recipe_id=recipe.id)

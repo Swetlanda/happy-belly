@@ -21,6 +21,16 @@ SERVING_CHOICES = [
 
 
 # Create your models here.
+class Favorite(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    recipe = models.ForeignKey('Recipe', on_delete=models.SET_NULL, null=True)
+
+    class Meta:
+        unique_together = ('user', 'recipe')
+
+    def __str__(self):
+        return f'{self.user.username} - {self.recipe.title}'
+
 class Recipe(models.Model):
     title = models.CharField(max_length=150, unique=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)

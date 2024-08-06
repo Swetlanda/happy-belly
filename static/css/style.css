@@ -147,6 +147,12 @@ body {
     font-weight: bold;
 }
 
+.card-title-welcom {
+    color: var(--primary-medium-green);
+    font-family: 'Bodoni Moda', serif;
+    font-weight: bold;
+}
+
 .card-text {
     color: var(--primary-dark-green);
 }
@@ -229,20 +235,50 @@ p {
 }
 
 /* Buttons */
+.btn-custom {
+    padding: 0.625rem 1.25rem;                          
+    font-weight: bold;                           
+    transition: background-color 0.3s ease, color 0.3s ease; 
+    text-transform: uppercase;                   
+    letter-spacing: 0.5rem;                       
+    border-radius: 0.625rem;                         
+    width: 100%;                                 
+    margin-top: 0.625rem;                           
+    display: block;                             
+}
+
+.btn-fixed-width {
+    width: 80%;  
+    max-width: 12.5rem;  
+    display: block;  
+    margin: 0 auto;  
+}
+
 .btn-primary {
-    background-color: var(--primary-medium-green); 
+    background-color: var(--primary-medium-green);
     border-color: var(--primary-medium-green);
     color: white;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: bold;
-    border-radius: 10px; 
-    transition: background-color 0.3s ease, color 0.3s ease;
+    padding: 0.625rem 1.25rem;  
+    border: 0.125rem solid var(--primary-medium-green);  
 }
 
 .btn-primary:hover {
-    background-color: var(--accent-dark-violet); 
-    border-color: var(--accent-dark-violet);
+    background-color: var(--accent-dark-violet);
     color: white;
+}
+
+.btn-remove {
+    background-color: var(--accent-dark-violet);
+    border-color: var(--accent-dark-violet);
+    color: var(--primary-light-green);
+    padding: 0.625rem 1.25rem;  
+    border: 0.125rem solid var(--accent-dark-violet);
+}
+
+.btn-remove:hover {
+    background-color: #9f2b60; 
+    color: white;               
+    border-color: #9f2b60;      
 }
 
 /* Adjust main and message elements */
