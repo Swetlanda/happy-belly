@@ -10,6 +10,11 @@ class RecipeAdmin(SummernoteModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     summernote_fields = ('description', 'ingredients', 'instructions')
 
+    def save_model(self, request, obj, form, change):
+        if obj.status == 1 and not obj.pk:
+            obj.status = 0  
+        super().save_model(request, obj, form, change)
+
     def get_search_results(self, request, queryset, search_term):
         queryset, use_distinct = super().get_search_results(request, queryset, search_term)
 

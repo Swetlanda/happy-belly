@@ -6,6 +6,7 @@
 {% url 'account_login' as login_url %}
 {% url 'account_signup' as signup_url %}
 {% url 'account_logout' as logout_url %}
+{% url 'create_recipe' as create_recipe_url %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -37,7 +38,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <a class="nav-link {% if request.path == home_url %}active{% endif %}" href="{% url 'home' %}">Home</a>
                     </li>
@@ -46,7 +47,7 @@
                     </li>
                     {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == create_recipe_url %}active{% endif %}" href="{% url 'create_recipe' %}">Add</a>
+                        <a class="nav-link {% if request.path == create_recipe_url %}active{% endif %}" href="{% url 'create_recipe' %}">Add a Recipe</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'account_logout' %}">Logout</a>

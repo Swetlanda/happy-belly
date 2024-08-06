@@ -5,6 +5,8 @@ from .models import Recipe
 from .forms import RecipeForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from cloudinary.uploader import upload
+
 
 class RecipeListView(generic.ListView):
     """
@@ -52,18 +54,58 @@ def create_recipe(request):
     if request.method == "POST":
         form = RecipeForm(request.POST, request.FILES)
         if form.is_valid():
-            recipe = form.save(commit=False)
-            recipe.user = request.user
-            recipe.save()  
-            messages.success(request, "Your recipe was sussessfully created!")
-            return redirect("recipe_list")
+            new_recipe = form.save(commit=False)
+            new_recipe.user = request.user
+            new_recipe.status = 0  
+            new_recipe.save()
+            form.save_m2m()  
+
+            # Store preview data in the session without attempting to access the image URL
+            request.session['preview_data'] = {
+                'title': new_recipe.title,
+                'description': new_recipe.description,
+                'ingredients': new_recipe.ingredients,
+                'instructions': new_recipe.instructions,
+                'image_url': new_recipe.image.url if new_recipe.image else None,
+                'tags': [tag.name for tag in new_recipe.tags.all()],
+                'serving': new_recipe.get_serving_display(),
+                'image_alt': new_recipe.image_alt,
+            }
+
+            # Handle image preview separately if needed
+            if new_recipe.image:
+                request.session['preview_image'] = new_recipe.image.url
+
+            messages.success(request, "This is a preview of your recipe.")
+            return redirect('recipe_preview', recipe_id=new_recipe.id)
         else:
             messages.error(request, "There was an error in your form submission. Please try again.")
     else:
         form = RecipeForm()
     
-    context = {"form": form, }
-    return render(request, 'recipes/create_recipe.html', context)
+    return render(request, 'recipes/create_recipe.html', {'form': form})
+
+@login_required
+def recipe_preview(request, recipe_id):
+    """
+    Previews a recipe before submission - user can select Susbmit for approval or Edit again.
+    """
+    recipe = get_object_or_404(Recipe, id=recipe_id)
+
+    preview_data = request.session.get('preview_data', None)
+      
+    if request.method == "POST":
+        # If POST request, change status for pending approval or or redirect to edit page again 
+        if 'confirm' in request.POST:  
+            recipe.status = 0  
+            recipe.save()
+            messages.success(request, "Your recipe has been sent to the admin for approval.")
+            return redirect('recipe_list')
+        elif 'edit' in request.POST:  
+            messages.info(request, "Continuing to edit the recipe.")
+            return redirect('edit_recipe', recipe_id=recipe.id)
+
+    return render(request, 'recipes/preview_recipe.html', {'preview_data': preview_data})
 
 @login_required
 def edit_recipe(request, recipe_id):
@@ -77,18 +119,40 @@ def edit_recipe(request, recipe_id):
         return redirect("home")
 
     if request.method == "POST":
-        form = RecipeForm(request.POST, instance=retrieved_recipe)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Your recipe was updated!")
-            return redirect('view_recipe', recipe_id=recipe.id)
-        else:
-            messages.error(request, "There was an error in your form submission. Please try again.")
-        
+        if 'submit' in request.POST:
+            form = RecipeForm(request.POST, request.FILES, instance=retrieved_recipe)
+            if form.is_valid():
+                updated_recipe = form.save(commit=False)
+                updated_recipe.status = 0  
+                updated_recipe.save()
+                form.save_m2m()
+
+                messages.success(request, "Your changes have been submitted for approval.")
+                return redirect('recipe_list')
+            else:
+                messages.error(request, "There was an error in your form submission. Please try again.")
+        elif 'preview' in request.POST:
+            form = RecipeForm(request.POST, request.FILES, instance=retrieved_recipe)
+            if form.is_valid():
+                updated_recipe = form.save(commit=False)
+
+                # Store form data in session for preview
+                request.session['preview_data'] = {
+                    'title': updated_recipe.title,
+                    'description': updated_recipe.description,
+                    'ingredients': updated_recipe.ingredients,
+                    'instructions': updated_recipe.instructions,
+                    'image_url': updated_recipe.image.url if updated_recipe.image else None,
+                    'tags': [tag.name for tag in updated_recipe.tags.all()],
+                    'serving': updated_recipe.get_serving_display(),
+                    'image_alt': updated_recipe.image_alt,
+                }
+                return redirect('recipe_preview', recipe_id=retrieved_recipe.id)
     else:
         form = RecipeForm(instance=retrieved_recipe)
-        context = {"form": form, "recipe": retrieved_recipe}
-        return render(request, 'recipes/edit_recipe.html', context)
+    
+    return render(request, 'recipes/edit_recipe.html', {'form': form, 'recipe': retrieved_recipe})
+
 
 @login_required           
 def delete_recipe(request, recipe_id):
