@@ -8,6 +8,7 @@ from .views import (
     delete_recipe, 
     recipe_search, 
     welcome_page,
+    homepage,
 )
 
 

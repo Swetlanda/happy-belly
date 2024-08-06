@@ -56,10 +56,11 @@ def create_recipe(request):
         if form.is_valid():
             new_recipe = form.save(commit=False)
             new_recipe.user = request.user
-            new_recipe.status = 0  # Set status to draft
+            new_recipe.status = 0  
             new_recipe.save()
-            form.save_m2m()  # Save the many-to-many data for tags
+            form.save_m2m()  
 
+            # Store preview data in the session without attempting to access the image URL
             request.session['preview_data'] = {
                 'title': new_recipe.title,
                 'description': new_recipe.description,
@@ -68,8 +69,14 @@ def create_recipe(request):
                 'image_url': new_recipe.image.url if new_recipe.image else None,
                 'tags': [tag.name for tag in new_recipe.tags.all()],
                 'serving': new_recipe.get_serving_display(),
+                'image_alt': new_recipe.image_alt,
             }
-            messages.success(request, "Your recipe has been created. Do you want to preview your recipe?")
+
+            # Handle image preview separately if needed
+            if new_recipe.image:
+                request.session['preview_image'] = new_recipe.image.url
+
+            messages.success(request, "This is a preview of your recipe.")
             return redirect('recipe_preview', recipe_id=new_recipe.id)
         else:
             messages.error(request, "There was an error in your form submission. Please try again.")
@@ -81,41 +88,20 @@ def create_recipe(request):
 @login_required
 def recipe_preview(request, recipe_id):
     """
-    Previews a recipe before submission.
+    Previews a recipe before submission - user can select Susbmit for approval or Edit again.
     """
     recipe = get_object_or_404(Recipe, id=recipe_id)
 
     preview_data = request.session.get('preview_data', None)
-
-    if preview_data:
-        preview_data = {
-            'title': preview_data.get('title', recipe.title),
-            'description': preview_data.get('description', recipe.description),
-            'ingredients': preview_data.get('ingredients', recipe.ingredients),
-            'instructions': preview_data.get('instructions', recipe.instructions),
-            'image_url': preview_data.get('image_url', recipe.image.url if recipe.image else None),
-            'tags': preview_data.get('tags', [tag.name for tag in recipe.tags.all()]),
-            'serving': preview_data.get('serving', recipe.get_serving_display()),
-        }
-    else:
-        preview_data = {
-            'title': recipe.title,
-            'description': recipe.description,
-            'ingredients': recipe.ingredients,
-            'instructions': recipe.instructions,
-            'image_url': recipe.image.url if recipe.image else None,
-            'tags': [tag.name for tag in recipe.tags.all()],
-            'serving': recipe.get_serving_display(),
-        }
-    
+      
     if request.method == "POST":
-        if 'confirm' in request.POST:  # Check for confirm button
-            # Set recipe status to pending approval
-            recipe.status = 0  # Or any status that means "pending approval"
+        # If POST request, change status for pending approval or or redirect to edit page again 
+        if 'confirm' in request.POST:  
+            recipe.status = 0  
             recipe.save()
             messages.success(request, "Your recipe has been sent to the admin for approval.")
             return redirect('recipe_list')
-        elif 'edit' in request.POST:  # Check for edit button
+        elif 'edit' in request.POST:  
             messages.info(request, "Continuing to edit the recipe.")
             return redirect('edit_recipe', recipe_id=recipe.id)
 
@@ -133,27 +119,35 @@ def edit_recipe(request, recipe_id):
         return redirect("home")
 
     if request.method == "POST":
-        form = RecipeForm(request.POST, instance=retrieved_recipe)
-        if form.is_valid():
-            updated_recipe = form.save(commit=False)
-            updated_recipe.status = 0  
-            updated_recipe.save()
-            form.save_m2m() 
+        if 'submit' in request.POST:
+            form = RecipeForm(request.POST, request.FILES, instance=retrieved_recipe)
+            if form.is_valid():
+                updated_recipe = form.save(commit=False)
+                updated_recipe.status = 0  
+                updated_recipe.save()
+                form.save_m2m()
 
-            request.session['preview_data'] = {
-                'title': updated_recipe.title,
-                'description': updated_recipe.description,
-                'ingredients': updated_recipe.ingredients,
-                'instructions': updated_recipe.instructions,
-                'image_url': updated_recipe.image.url if updated_recipe.image else None,
-                'tags': [tag.name for tag in updated_recipe.tags.all()],
-                'serving': updated_recipe.get_serving_display(),
-            }
+                messages.success(request, "Your changes have been submitted for approval.")
+                return redirect('recipe_list')
+            else:
+                messages.error(request, "There was an error in your form submission. Please try again.")
+        elif 'preview' in request.POST:
+            form = RecipeForm(request.POST, request.FILES, instance=retrieved_recipe)
+            if form.is_valid():
+                updated_recipe = form.save(commit=False)
 
-            messages.success(request, "Your changes have been saved. Do you want to preview the recipe?")
-            return redirect('recipe_preview', recipe_id=retrieved_recipe.id)
-        else:
-            messages.error(request, "There was an error in your form submission. Please try again.")
+                # Store form data in session for preview
+                request.session['preview_data'] = {
+                    'title': updated_recipe.title,
+                    'description': updated_recipe.description,
+                    'ingredients': updated_recipe.ingredients,
+                    'instructions': updated_recipe.instructions,
+                    'image_url': updated_recipe.image.url if updated_recipe.image else None,
+                    'tags': [tag.name for tag in updated_recipe.tags.all()],
+                    'serving': updated_recipe.get_serving_display(),
+                    'image_alt': updated_recipe.image_alt,
+                }
+                return redirect('recipe_preview', recipe_id=retrieved_recipe.id)
     else:
         form = RecipeForm(instance=retrieved_recipe)
     

@@ -1,4 +1,4 @@
-/* Color variables based on the selected palette */
+/* Color variables based on the palette */
 :root {
     --primary-light-green: #a6cc99;  /* Light green for backgrounds */
     --primary-medium-green: #629a74; /* Medium green for buttons and nav */
@@ -62,11 +62,10 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease, border-radius 0.3s ease;
 }
 
-.btn-outline-success:hover,
-.btn-outline-success:focus {
+.btn-outline-success:hover, .btn-outline-success:focus {
     background-color: white;
     color: var(--primary-medium-green);
-    border-radius: 15px;
+    border-radius: 15px; 
 }
 
 /* Main Banner */
@@ -76,7 +75,7 @@ body {
     color: var(--primary-light-green);
     padding: 7em 2rem; 
     border-radius: 15px;
-    background-image: url('{% static "images/banner.jpg" %}'); /* This should be in the HTML or handled by Django */
+    background-image: url('{% static "images/banner.jpg" %}'); /* Not sure what to do with it */
     font-family: 'Bodoni Moda', serif;
     text-align: center;
 }
@@ -143,7 +142,7 @@ body {
 }
 
 .card-title {
-    color: var(--accent-pink); 
+    color: var(--primary-dark-green);
     font-family: 'Bodoni Moda', serif;
     font-weight: bold;
 }
@@ -158,6 +157,12 @@ body {
 
 .text-center.mt-2 {
     margin-top: 1rem; 
+}
+
+/* Form Titles */
+.card-header.bg-primary.text-white.text-center {
+    background-color: var(--primary-medium-green) !important;
+    color: var(--primary-light-green) !important;
 }
 
 /* Footer */
@@ -225,90 +230,50 @@ p {
 
 /* Buttons */
 .btn-primary {
-    background-color: var(--primary-medium-green);
+    background-color: var(--primary-medium-green); 
     border-color: var(--primary-medium-green);
     color: white;
     font-family: 'Montserrat', sans-serif;
     font-weight: bold;
-    border-radius: 10px;
+    border-radius: 10px; 
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .btn-primary:hover {
-    background-color: var(--accent-dark-violet);
+    background-color: var(--accent-dark-violet); 
     border-color: var(--accent-dark-violet);
     color: white;
 }
 
-button[type="submit"] {
-    background-color: var(--primary-medium-green);
-    border: none;
-    color: white;
-    font-weight: bold;
-    padding: 10px 20px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-button[type="submit"]:hover {
-    background-color: var(--accent-dark-violet);
-}
-
-/* Forms */
-form {
-    margin-top: 20px;
-}
-
-input[type="text"], input[type="password"], input[type="email"] {
-    border: 1px solid var(--primary-medium-green);
-    border-radius: 5px;
-    padding: 10px;
-    width: 100%;
-    box-sizing: border-box;
-    margin-bottom: 10px;
-}
-
-.form-control {
-    display: block;
-    width: 100%;
-    padding: 0.375rem 0.75rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: 0.25rem;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
-
-/* Adjust Main and Message Elements */
+/* Adjust main and message elements */
 .flex-shrink-0 {
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
+    padding-top: 0 !important;  
+    padding-bottom: 0 !important;  
 }
 
 p.logged-in-message {
-    margin: 0 !important;
-    padding: 0 !important;
-    line-height: 1 !important;
+    margin: 0 !important;  
+    padding: 0 !important; 
+    line-height: 1 !important; 
     color: var(--primary-dark-green);
-    font-size: 0.9rem;
+    font-size: 0.9rem;  
     font-family: 'Montserrat', sans-serif;
     display: inline-block;
-    position: absolute;
-    top: 0;
-    right: 20px;
-    z-index: 10;
-    text-align: right;
+    position: absolute;  
+    top: 0;  
+    right: 20px;  
+    z-index: 10; 
+    text-align: right;  
 }
 
-/* Adjust Container */
-.container {
-    margin-top: 30px;
+/* Adjust container */
+main {
+    margin: 0 !important; 
+    padding: 0 !important; 
+    position: relative;  
 }
 
-/* Pagination Controls */
+/* Pagnation controls style */
 .pagination .page-item .page-link {
     color: var(--primary-dark-green);
     border: 1px solid var(--primary-medium-green);
@@ -328,54 +293,65 @@ p.logged-in-message {
     border-color: var(--accent-dark-violet);
 }
 
-/* Recipe Tags */
+/* Style tags on Recipe list page */
 .badge-primary {
-    background-color: var(--primary-dark-green);
+    background-color: var(--primary-dark-green); 
     color: white;
     margin-right: 5px;
 }
 
 .badge-secondary {
-    background-color: var(--primary-dark-green);
+    background-color: var(--primary-dark-green); 
     color: white;
     margin-right: 5px;
 }
 
-/* Content Box Styling for Ingredients and Instructions */
-.content-box {
-    background-color: white;
-    border: 1px solid var(--primary-medium-green);
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 30px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.content-box h3 {
-    font-family: 'Bodoni Moda', serif;
-    color: var(--primary-dark-green);
-    margin-bottom: 15px;
-}
-
-.content-box ul,
-.content-box ol {
-    padding-left: 20px;
-}
-
-.content-box .ingredient-item,
-.content-box .instruction-item {
-    margin-bottom: 10px;
-}
-
-/* Form Consistency */
-.form-header {
-    font-size: 1.5rem;
-    color: var(--primary-dark-green);
+/* Button Styles for CRUD functionality*/
+.btn {
+    padding: 10px 20px;
     font-weight: bold;
-    margin-bottom: 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-.form-footer {
-    text-align: center;
-    margin-top: 20px;
+.btn-primary {
+    background-color: var(--primary-medium-green);
+    border: none;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-dark-violet);
+}
+
+.btn-warning {
+    background-color: var(--accent-pink);
+    border: none;
+    color: white;
+}
+
+.btn-warning:hover {
+    background-color: var(--accent-dark-violet);
+}
+
+.btn-success {
+    background-color: var(--primary-medium-green);
+    border: none;
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: var(--accent-dark-violet);
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border: none;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #bd2130;
 }
