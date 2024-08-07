@@ -150,8 +150,8 @@ body {
     font-weight: bold;
 }
 
-.card-title-welcom {
-    color: var(--primary-medium-green);
+.card-title-green {
+    color: var(--primary-dark-green);
     font-family: 'Bodoni Moda', serif;
     font-weight: bold;
 }
