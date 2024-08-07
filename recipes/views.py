@@ -19,10 +19,8 @@ class RecipeListView(generic.ListView):
     paginate_by = 8
 
     def get_queryset(self):
-        queryset = Recipe.objects.filter(status=1)
-        print(queryset)  
-        return queryset  
-
+        return Recipe.objects.filter(status=1)
+   
 def homepage(request):
     """
     Displays the homepage. Redirects to welcome page if the user is logged in.
@@ -93,7 +91,7 @@ def create_recipe(request):
                 'image_alt': new_recipe.image_alt,
             }
 
-            # Handle image preview separately if needed
+            # Handle image preview separately 
             if new_recipe.image:
                 request.session['preview_image'] = new_recipe.image.url
 
@@ -116,7 +114,7 @@ def recipe_preview(request, recipe_id):
     preview_data = request.session.get('preview_data', None)
       
     if request.method == "POST":
-        # If POST request, change status for pending approval or or redirect to edit page again 
+        # If POST request, change status for pending approval or redirect to edit page again 
         if 'confirm' in request.POST:  
             recipe.status = 0  
             recipe.save()
