@@ -5,7 +5,7 @@
 {% block title %}My Recipes{% endblock %}
 
 {% block content %}
-<div class="container mt-4 mb-5">
+<div class="container mt-4 mb-4">
     <h1 class="text-center mb-4">My Recipes</h1>
 
     <!-- Recipe Cards -->
@@ -30,7 +30,7 @@
                         {% endfor %}
                     </p>
                     <div class="text-center">
-                        <a href="{% url 'view_recipe' recipe.id %}" class="btn btn-primary">View Recipe</a>
+                        <a href="{% url 'view_recipe' recipe.id %}" class="btn btn-primary btn-custom btn-fixed-width">View Recipe</a>
                     </div>
                 </div>
             </div>

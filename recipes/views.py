@@ -19,7 +19,9 @@ class RecipeListView(generic.ListView):
     paginate_by = 8
 
     def get_queryset(self):
-        return Recipe.objects.filter(status=1)  
+        queryset = Recipe.objects.filter(status=1)
+        print(queryset)  
+        return queryset  
 
 def homepage(request):
     """
@@ -243,6 +245,12 @@ def remove_from_favorites(request, recipe_id):
     Remove a recipe from the user's favorites.
     """
     recipe = get_object_or_404(Recipe, id=recipe_id)
-    Favorite.objects.filter(user=request.user, recipe=recipe).delete()
-    messages.success(request, "Recipe removed from your favorites.")
-    return redirect('view_recipe', recipe_id=recipe.id)
+
+    if request.method == 'POST':
+        Favorite.objects.filter(user=request.user, recipe=recipe).delete()
+        messages.success(request, "Recipe removed from your favorites.")
+
+    return redirect('my_favorites')
+
+from recipes.models import Recipe
+

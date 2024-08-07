@@ -31,7 +31,7 @@
                     </p>
                     <div class="text-center">
                         <a href="{% url 'view_recipe' favorite.recipe.id %}" class="btn btn-primary btn-custom btn-fixed-width">View Recipe</a>
-                        <form method="post" class="mt-2"> 
+                        <form method="post" action="{% url 'remove_from_favorites' favorite.recipe.id %}" class="mt-2">
                             {% csrf_token %}
                             <button type="submit" name="remove" class="btn btn-remove btn-custom btn-fixed-width">Remove</button>
                         </form>
