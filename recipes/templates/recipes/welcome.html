@@ -1,23 +1,48 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block title %}Welcome{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
+<div class="container mt-5">
     <h1 class="text-center">Welcome, {{ user.username }}!</h1>
     <p class="text-center">We're glad to have you back at Happy Belly Recipes.</p>
 
-    <!-- Additional content for logged-in users -->
-    <div class="row mt-4">
-        <div class="col-md-6 offset-md-3">
-            <div class="card">
+    <!-- Create New Recipe Button -->
+    <div class="row mt-5">
+        <div class="col-lg-4 mb-4 d-flex align-items-stretch">
+            <div class="card shadow w-100">
                 <div class="card-body text-center">
-                    <h5 class="card-title">Create New Recipe</h5>
-                    <p class="card-text">Add your amazing recipes and share them with the community.</p>
-                    <a href="{% url 'create_recipe' %}" class="btn btn-primary">Add Recipe</a>
+                    <h3 class="card-title-green"><i class="fa-solid fa-bowl-food"></i> Create New Recipe</h3>
+                    <p class="card-text">Add your recipes and share them with the community.</p>
+                    <a href="{% url 'create_recipe' %}" class="btn btn-success">Add Recipe</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- My Recipes Card -->
+        <div class="col-lg-4 mb-4 d-flex align-items-stretch">
+            <div class="card shadow w-100">
+                <div class="card-body text-center">
+                    <h3 class="card-title-green"><i class="fa-solid fa-paperclip"></i> My Recipes</h3>
+                    <p class="card-text">View and manage all the recipes you have created.</p>
+                    <a href="{% url 'my_recipes' %}" class="btn btn-primary">My Recipes</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- My Favorites Card -->
+        <div class="col-lg-4 mb-4 d-flex align-items-stretch">
+            <div class="card shadow w-100">
+                <div class="card-body text-center">
+                    <h3 class="card-title-green"><i class="fa-solid fa-heart"></i> My Favorites</h3>
+                    <p class="card-text">Access all the recipes you've added to your favorites.</p>
+                    <a href="{% url 'my_favorites' %}" class="btn btn-primary">My Favorites</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 {% endblock %}

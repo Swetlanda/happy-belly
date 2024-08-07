@@ -1,12 +1,12 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% load static %}
 
-{% block title %}Simple Recipes for Happy Bellies{% endblock %}
+{% block title %}My Recipes{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
-    <h1 class="text-center mb-4">Simple Recipes for Happy Bellies</h1>
+<div class="container mt-4 mb-4">
+    <h1 class="text-center mb-4">My Recipes</h1>
 
     <!-- Recipe Cards -->
     <div class="row">
@@ -21,7 +21,7 @@
                     {% endif %}
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title-green">{{ recipe.title }}</h5>
+                    <h5 class="card-title">{{ recipe.title }}</h5>
                     <p class="card-text">{{ recipe.description|truncatechars:100 }}</p>
                     <p class="text-muted"><em>By {{ recipe.user.username }}</em></p>
                     <p class="text-muted">
@@ -30,13 +30,13 @@
                         {% endfor %}
                     </p>
                     <div class="text-center">
-                        <a href="{% url 'view_recipe' recipe.id %}" class="btn btn-primary">View Recipe</a>
+                        <a href="{% url 'view_recipe' recipe.id %}" class="btn btn-primary btn-custom btn-fixed-width">View Recipe</a>
                     </div>
                 </div>
             </div>
         </div>
         {% empty %}
-        <p class="text-center">No recipes available at the moment.</p>
+        <p class="text-center">You haven't created any recipes yet.</p>
         {% endfor %}
     </div>
 
