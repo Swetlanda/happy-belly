@@ -17,13 +17,14 @@
                     <p class="card-text">{{ preview_data.description }}</p>
                     <p class="card-text"><strong>Ingredients:</strong> {{ preview_data.ingredients }}</p>
                     <p class="card-text"><strong>Instructions:</strong> {{ preview_data.instructions }}</p>
-                    <p class="card-text"><strong>Tags:</strong> {{ preview_data.tags|join:", " }}</p>
                     <p class="card-text"><strong>Serving:</strong> {{ preview_data.serving }}</p>
-                    
-                    {% if request.session.preview_image %}
-                    <img src="{{ request.session.preview_image }}" class="img-fluid" alt="{{ preview_data.title }}">
+                    <p class="card-text"><strong>Tags:</strong> 
+                        {{ preview_data.tags }}
+                    </p>
+                    {% if preview_data.image_url %}
+                        <img src="{{ preview_data.image_url }}" alt="{{ preview_data.image_alt }}" class="img-fluid rounded">
                     {% else %}
-                    <p>No image available for preview.</p>
+                        <img src="{% static 'images/default.jpg' %}" alt="Default Image" class="img-fluid rounded">
                     {% endif %}
                 </div>
                 <div class="card-footer text-center">
