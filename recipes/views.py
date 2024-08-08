@@ -8,10 +8,11 @@ from django.contrib.auth.decorators import login_required
 from cloudinary.uploader import upload
 from django.db.models import Count
 
-
 class RecipeListView(generic.ListView):
     """
-    Displays all recipes with pagination.
+    Displays all recipes with a published status (status=1) 
+    with pagination of 8 recipes per page 
+    for all visitors (no log-in required to view).
     """
     model = Recipe
     template_name = 'recipes/recipe_list.html'  
@@ -23,18 +24,28 @@ class RecipeListView(generic.ListView):
    
 def homepage(request):
     """
-    Displays the homepage. Redirects to welcome page if the user is logged in.
+    Displays the homepage for all visitors. 
+    Redirects to welcome page if the user is logged in.
     """
     if request.user.is_authenticated:
         return redirect('welcome')
-    return render(request, 'home.html')
+    all_recipes = Recipe.objects.filter(status=1)
+    context = {
+        'recipes': all_recipes,
+    }
+    return render(request, 'home.html', context)
 
 @login_required
 def welcome_page(request):
     """
     Displays a welcome page for logged-in users.
     """
-    return render(request, 'recipes/welcome.html', {'user': request.user})
+    user_recipes = Recipe.objects.filter(user=request.user, status=1)
+    context = {
+        'user': request.user,
+        'recipes': user_recipes,
+    }
+    return render(request, 'recipes/welcome.html', context)
 
 def view_recipe(request, recipe_id):
     """
