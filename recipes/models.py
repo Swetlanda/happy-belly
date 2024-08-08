@@ -19,7 +19,6 @@ SERVING_CHOICES = [
         (8, '8 people'),
 ]
 
-
 # Create your models here.
 class Favorite(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
@@ -52,11 +51,26 @@ class Recipe(models.Model):
     def __str__(self):
         return f'"{self.title}" by {self.user}'
 
-# A function to automatically generate a slug from the title before saving the model instance.
+    def generate_unique_slug(self):
+        """
+        Generates a unique slug for the recipe. If the generated slug already exists,
+        appends a unique suffix to make it unique.
+        """
+        original_slug = slugify(self.title)
+        queryset = Recipe.objects.filter(slug__iexact=original_slug).exists()
+        slug = original_slug
+        unique_suffix = 1
+        while queryset:
+            slug = f"{original_slug}-{unique_suffix}"
+            queryset = Recipe.objects.filter(slug__iexact=slug).exists()
+            unique_suffix += 1
+        return slug
+
 @receiver(pre_save, sender=Recipe)
 def populate_slug(sender, instance, **kwargs):
     """
-    This function automatically generates a slug from the recipe title using the slugify function if the slug field is empty. 
+    This function automatically generates a unique slug from the recipe title 
+    using the generate_unique_slug method.
     """
     if not instance.slug:
         instance.slug = slugify(instance.title)

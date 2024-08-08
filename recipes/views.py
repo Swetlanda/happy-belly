@@ -5,14 +5,13 @@ from .models import Recipe, Favorite
 from .forms import RecipeForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from cloudinary.uploader import upload
-from django.db.models import Count
+from django.core.exceptions import PermissionDenied
 
 class RecipeListView(generic.ListView):
     """
-    Displays all recipes with a published status (status=1) 
+    Displays a list of all recipes with a published status (status=1) 
     with pagination of 8 recipes per page 
-    for all visitors (no log-in required to view).
+    for all visitors (no log-in required to view recipes).
     """
     model = Recipe
     template_name = 'recipes/recipe_list.html'  
@@ -29,6 +28,7 @@ def homepage(request):
     """
     if request.user.is_authenticated:
         return redirect('welcome')
+
     all_recipes = Recipe.objects.filter(status=1)
     context = {
         'recipes': all_recipes,
@@ -49,7 +49,7 @@ def welcome_page(request):
 
 def view_recipe(request, recipe_id):
     """
-    Displays a single recipe and allows for adding/removing from favorites (for logged-in users).
+    Displays a single full recipe for all visitors and manages favorite status for logged-in users.
     """
     retrieved_recipe = get_object_or_404(Recipe, id=recipe_id)
     
@@ -58,7 +58,7 @@ def view_recipe(request, recipe_id):
     if request.user.is_authenticated:
         is_favorite = Favorite.objects.filter(user=request.user, recipe=retrieved_recipe).exists()
 
-    # Add/remove favorites
+    # Add/remove favorites 
     if request.method == "POST":
         if request.user.is_authenticated:
             if 'add_to_favorites' in request.POST:
@@ -68,18 +68,17 @@ def view_recipe(request, recipe_id):
         else:
             messages.error(request, "You need to be logged in to add recipes to favorites.")
             return redirect('account_login')
-
     context = {
         "recipe": retrieved_recipe,
         "is_favorite": is_favorite,
     }
-
     return render(request, 'recipes/view_recipe.html', context)
 
 @login_required
 def create_recipe(request):
     """
-    Creates a new recipe for logged-in users.
+    Creates a new recipe for logged-in users (pending admin's approval), 
+    also save the recipe with a pending status and store preview data in the session.
     """
     if request.method == "POST":
         form = RecipeForm(request.POST, request.FILES)
@@ -90,21 +89,8 @@ def create_recipe(request):
             new_recipe.save()
             form.save_m2m()  
 
-            # Store preview data in the session without attempting to access the image URL
-            request.session['preview_data'] = {
-                'title': new_recipe.title,
-                'description': new_recipe.description,
-                'ingredients': new_recipe.ingredients,
-                'instructions': new_recipe.instructions,
-                'image_url': new_recipe.image.url if new_recipe.image else None,
-                'tags': [tag.name for tag in new_recipe.tags.all()],
-                'serving': new_recipe.get_serving_display(),
-                'image_alt': new_recipe.image_alt,
-            }
-
-            # Handle image preview separately 
-            if new_recipe.image:
-                request.session['preview_image'] = new_recipe.image.url
+            # Call a function store_preview_data_in_session to store preview data in the session 
+            store_preview_data_in_session(request, new_recipe)
 
             messages.success(request, "This is a preview of your recipe.")
             return redirect('recipe_preview', recipe_id=new_recipe.id)
@@ -113,34 +99,58 @@ def create_recipe(request):
     else:
         form = RecipeForm()
     
-    return render(request, 'recipes/create_recipe.html', {'form': form})
+    context = {
+        'form': form
+    }
+    return render(request, 'recipes/create_recipe.html', context)
+
+def store_preview_data_in_session(request, recipe):
+    """
+    An additional function to store recipe data in the session for preview purposes.
+    """
+    request.session['preview_data'] = {
+        'title': recipe.title,
+        'description': recipe.description,
+        'ingredients': recipe.ingredients,
+        'instructions': recipe.instructions,
+        'tags': ', '.join([tag.name for tag in recipe.tags.all()]),
+        'serving': recipe.get_serving_display(),
+        'image_url': recipe.image.url if recipe.image else None,
+        'image_alt': recipe.image_alt,
+    }
+    if recipe.image:
+        request.session['preview_image'] = recipe.image.url
 
 @login_required
 def recipe_preview(request, recipe_id):
     """
-    Previews a recipe before submission - user can select Susbmit for approval or Edit again.
+    Dispays a previw of the recipe before submission - user can select Submit for approval or Edit again.
     """
     recipe = get_object_or_404(Recipe, id=recipe_id)
 
     preview_data = request.session.get('preview_data', None)
       
     if request.method == "POST":
-        # If POST request, change status for pending approval or redirect to edit page again 
+        # If Confirm, save recipe and send to admin for approval
         if 'confirm' in request.POST:  
             recipe.status = 0  
             recipe.save()
             messages.success(request, "Your recipe has been sent to the admin for approval.")
             return redirect('recipe_list')
+        # If Edit, redirect to Edit recipe again
         elif 'edit' in request.POST:  
-            messages.info(request, "Continuing to edit the recipe.")
+            messages.info(request, "You can continue to edit the recipe.")
             return redirect('edit_recipe', recipe_id=recipe.id)
-
-    return render(request, 'recipes/recipe_preview.html', {'preview_data': preview_data})
+    
+    context = {
+        'preview_data': preview_data
+    }
+    return render(request, 'recipes/recipe_preview.html', context)
 
 @login_required
 def edit_recipe(request, recipe_id):
     """
-    Edits an existing recipe for logged-in users.
+    Edits an existing recipe for logged-in users - user can select Submit for approval or Preview recipe.
     """
     retrieved_recipe = get_object_or_404(Recipe, id=recipe_id)
 
@@ -149,45 +159,41 @@ def edit_recipe(request, recipe_id):
         return redirect("home")
 
     if request.method == "POST":
-        if 'submit' in request.POST:
-            form = RecipeForm(request.POST, request.FILES, instance=retrieved_recipe)
-            if form.is_valid():
-                updated_recipe = form.save(commit=False)
+        form = RecipeForm(request.POST, request.FILES, instance=retrieved_recipe)
+        if form.is_valid():
+            updated_recipe = form.save(commit=False)
+
+            # If Submit, save recipe and send to admin for approval
+            if 'submit' in request.POST:
                 updated_recipe.status = 0  
                 updated_recipe.save()
                 form.save_m2m()
-
                 messages.success(request, "Your changes have been submitted for approval.")
                 return redirect('recipe_list')
-            else:
-                messages.error(request, "There was an error in your form submission. Please try again.")
-        elif 'preview' in request.POST:
-            form = RecipeForm(request.POST, request.FILES, instance=retrieved_recipe)
-            if form.is_valid():
-                updated_recipe = form.save(commit=False)
 
-                # Store form data in session for preview
-                request.session['preview_data'] = {
-                    'title': updated_recipe.title,
-                    'description': updated_recipe.description,
-                    'ingredients': updated_recipe.ingredients,
-                    'instructions': updated_recipe.instructions,
-                    'image_url': updated_recipe.image.url if updated_recipe.image else None,
-                    'tags': [tag.name for tag in updated_recipe.tags.all()],
-                    'serving': updated_recipe.get_serving_display(),
-                    'image_alt': updated_recipe.image_alt,
-                }
+            # If Preview, redirect to Recipe preview
+            elif 'preview' in request.POST:
+                store_preview_data_in_session(request, updated_recipe)
                 return redirect('recipe_preview', recipe_id=retrieved_recipe.id)
+
+        else:
+            messages.error(request, "There was an error in your form submission. Please try again.")
+
     else:
         form = RecipeForm(instance=retrieved_recipe)
-    
-    return render(request, 'recipes/edit_recipe.html', {'form': form, 'recipe': retrieved_recipe})
+        form.initial['tags'] = ', '.join([tag.name for tag in retrieved_recipe.tags.all()])
+
+    context = {
+        'form': form, 
+        'recipe': retrieved_recipe
+    }
+    return render(request, 'recipes/edit_recipe.html', context)
 
 
 @login_required           
 def delete_recipe(request, recipe_id):
     """
-    Deletes an existing recipe for logged-in users.
+    Deletes an existing recipe for logged-in users with verification that user created that recipe.
     """
     retrieved_recipe = get_object_or_404(Recipe, id=recipe_id)
 
@@ -199,8 +205,11 @@ def delete_recipe(request, recipe_id):
         retrieved_recipe.delete()
         messages.success(request, "Your recipe was deleted!")
         return redirect("home")
+
     else:
-        context = {"recipe": retrieved_recipe,}
+        context = {
+            "recipe": retrieved_recipe,
+        }
         return render(request, 'recipes/delete_recipe.html', context)
 
 def recipe_search(request):
@@ -212,7 +221,6 @@ def recipe_search(request):
         recipes = Recipe.objects.filter(title__icontains=query)
     else:
         recipes = Recipe.objects.all()
-
     context = {
         'recipes': recipes,
         'query': query,
@@ -225,7 +233,10 @@ def my_recipes(request):
     Display all recipes created by the current user.
     """
     user_recipes = Recipe.objects.filter(user=request.user, status=1)
-    return render(request, 'recipes/my_recipes.html', {'recipes': user_recipes})
+    context = {
+        'recipes': user_recipes,
+    }
+    return render(request, 'recipes/my_recipes.html', context)
 
 @login_required
 def my_favorites(request):
@@ -233,7 +244,10 @@ def my_favorites(request):
     Display all recipes that the current user has added to favorites.
     """
     favorite_recipes = Favorite.objects.filter(user=request.user).select_related('recipe')
-    return render(request, 'recipes/my_favorites.html', {'favorites': favorite_recipes})
+    context = {
+        'favorites': favorite_recipes,
+    }
+    return render(request, 'recipes/my_favorites.html', context)
 
 @login_required
 def add_to_favorites(request, recipe_id):
@@ -241,11 +255,15 @@ def add_to_favorites(request, recipe_id):
     Add a recipe to the user's favorites.
     """
     recipe = get_object_or_404(Recipe, id=recipe_id)
+
     favorite, created = Favorite.objects.get_or_create(user=request.user, recipe=recipe)
+
     if created:
         messages.success(request, "Recipe added to your favorites.")
+
     else:
         messages.info(request, "Recipe is already in your favorites.")
+
     return redirect('view_recipe', recipe_id=recipe.id)
 
 @login_required
@@ -261,5 +279,4 @@ def remove_from_favorites(request, recipe_id):
 
     return redirect('my_favorites')
 
-from recipes.models import Recipe
 
