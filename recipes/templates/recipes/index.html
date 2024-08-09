@@ -7,7 +7,7 @@
     <h1 class="text-center mb-4">Welcome to Happy Belly Recipes</h1>
 
     {% if request.user.is_superuser %}
-        <a href="{% url 'create' %}" class="btn btn-success mb-4">Create New Recipe</a>
+        <a href="{% url 'create' %}" class="btn btn-green mb-4">Create New Recipe</a>
     {% endif %}
 
     <!-- Recipe Cards -->
@@ -23,7 +23,7 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ recipe.title }}</h5>
                     <p class="card-text">{{ recipe.description|truncatechars:100 }}</p>
-                    <a href="{% url 'read' recipe.id %}" class="btn btn-primary">Read More</a>
+                    <a href="{% url 'read' recipe.id %}" class="btn btn-pink">Read More</a>
                     {% if recipe.user == request.user %}
                     <a href="{% url 'edit' recipe.id %}" class="btn btn-dark">Edit</a>
                     <a href="{% url 'delete' recipe.id %}" class="btn btn-danger">Delete</a>

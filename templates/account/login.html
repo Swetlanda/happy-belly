@@ -8,14 +8,14 @@
 {% block content %}
 <div class="container mt-4">
     <div class="row">
-        <div class="col-md-8 offset-md-2">
+        <div class="col-md-8 offset-md-2 mb-4">
             <div class="card shadow">
                 <div class="card-header bg-primary text-white text-center">
                     <h3>{% trans "Sign In" %}</h3>
                 </div>
                 <div class="card-body">
                     <p class="text-center mb-4">
-                        {% blocktrans %}Welcome back to Happy Belly Recipes! To leave a new recipe, please log in. If you have not created an account yet, then sign up first.{% endblocktrans %}
+                        {% blocktrans %}Welcome back to Happy Belly Recipes! To leave a new recipe, please log in. If you have not created an account yet, then sign up first here: {% endblocktrans %}
                         <a class="link" href="{{ signup_url }}">{% trans "sign up" %}</a>.
                     </p>
 
@@ -28,7 +28,7 @@
                         {% endif %}
 
                         <div class="text-center">
-                            <button class="btn btn-primary btn-lg w-100" type="submit">{% trans "Sign In" %}</button>
+                            <button class="btn btn-pink btn-lg w-100" type="submit">{% trans "Sign In" %}</button>
                         </div>
                     </form>
                 </div>

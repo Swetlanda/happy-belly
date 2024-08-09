@@ -21,16 +21,16 @@
                     {% endif %}
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">{{ recipe.title }}</h5>
+                    <h5 class="card-title-green">{{ recipe.title }}</h5>
                     <p class="card-text">{{ recipe.description|truncatechars:100 }}</p>
                     <p class="text-muted"><em>By {{ recipe.user.username }}</em></p>
                     <p class="text-muted">
                         {% for tag in recipe.tags.all %}
-                            <span class="badge badge-secondary">{{ tag.name }}</span>
+                            <span class="badge badge-primary">{{ tag.name }}</span>
                         {% endfor %}
                     </p>
                     <div class="text-center">
-                        <a href="{% url 'view_recipe' recipe.id %}" class="btn btn-primary btn-custom btn-fixed-width">View Recipe</a>
+                        <a href="{% url 'view_recipe' recipe.id %}" class="btn btn-pink btn-fixed-width">View Recipe</a>
                     </div>
                 </div>
             </div>
