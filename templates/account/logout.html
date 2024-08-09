@@ -6,25 +6,29 @@
 
 {% block content %}
 <div class="container">
-    <div class="container mt-5">
+    <div class="container mt-4">
         <div class="row">
-            <div class="col-md-6 offset-md-3">
+            <div class="col-md-8 offset-md-2 mb-4">
                 <div class="card shadow">
-                    <div class="card-header bg-primary text-white text-center">
-                        <h3>{% trans "Sign Out" %}</h3>
+                    <div class="card-header card-header-custom text-center">
+                        <h3 class="card-title-green">{% trans "Sign Out" %}</h3>
                     </div>
                     <div class="card-body">
+
+                        <!-- Sign out form -->
                         <p class="text-center mb-4">{% trans 'Are you sure you want to sign out?' %}</p>
-                        <form method="post" action="{% url 'account_logout' %}">
+                        <form method="POST" action="{% url 'account_logout' %}">
                             {% csrf_token %}
                             {% if redirect_field_value %}
                             <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
                             {% endif %}
                             <div class="text-center">
-                                <button class="btn btn-green btn-lg w-100" type="submit">{% trans 'Sign Out' %}</button>
+                                <button class="btn btn-pink btn-lg" type="submit">{% trans 'Sign Out' %}</button>
                             </div>
                         </form>
                     </div>
+
+                    <!-- Link to homepage -->
                     <div class="card-footer text-center">
                         <p>{% trans "Changed your mind?" %} <a href="{% url 'home' %}" class="text-primary">{% trans "Go back to homepage" %}</a></p>
                     </div>
@@ -32,4 +36,4 @@
             </div>
         </div>
     </div>
-{% endblock %}
+    {% endblock %}

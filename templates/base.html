@@ -105,11 +105,11 @@
     </div>
 
     <!-- Main content block -->
-    <main>
+    <main class="flex-shrink-0">
         {% if user.is_authenticated %}
-        <p class="text-end me-3">You are logged in as {{ user.username }}</p>
+        <p class="text-end logged-in-message me-5">You are logged in as {{ user.username }}</p>
         {% else %}
-        <p class="text-end me-3">You are not logged in</p>
+        <p class="text-end logged-in-message me-5">You are not logged in</p>
         {% endif %}
 
         {% block content %}

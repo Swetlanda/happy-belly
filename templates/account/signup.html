@@ -6,19 +6,23 @@
 {% block head_title %}{% trans "Sign Up" %}{% endblock %}
 
 {% block content %}
+
 <div class="container mt-4">
     <div class="row">
         <div class="col-md-8 offset-md-2 mb-4">
             <div class="card shadow">
-                <div class="card-header bg-primary text-white text-center">
-                    <h3>{% trans "Sign Up" %}</h3>
+                <div class="card-header card-header-custom text-center">
+                    <h3 class="card-title-green">{% trans "Sign Up" %}</h3>
                 </div>
+
                 <div class="card-body">
+                    <!-- Check if the user already has an account and redirect to Sign in-->
                     <p class="text-center mb-4">
                         {% blocktrans %}Already have an account?{% endblocktrans %}
                         <a href="{{ login_url }}" class="text-primary">{% trans "Sign in" %}</a>.
                     </p>
-
+                    
+                    <!-- Submit form -->
                     <form class="signup" id="signup_form" method="POST" action="{% url 'account_signup' %}">
                         {% csrf_token %}
                         {{ form.as_p }}
@@ -26,7 +30,8 @@
                         {% if redirect_field_value %}
                         <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
                         {% endif %}
-                        
+
+                        <!-- Submit button -->
                         <div class="text-center">
                             <button class="btn btn-pink btn-lg" type="submit">{% trans "Sign Up" %}</button>
                         </div>
@@ -36,4 +41,20 @@
         </div>
     </div>
 </div>
+
+<!-- JavaScript to check password mismatch in Password and Password (again) -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('signup_form');
+        const password1 = document.getElementById('id_password1');
+        const password2 = document.getElementById('id_password2');
+
+        form.addEventListener('submit', function (event) {
+            if (password1.value !== password2.value) {
+                event.preventDefault(); // Prevent form submission
+                alert('Passwords do not match'); // Show an alert box with the error message
+            }
+        });
+    });
+</script>
 {% endblock %}

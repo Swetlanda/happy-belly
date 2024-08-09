@@ -10,15 +10,17 @@
     <div class="row">
         <div class="col-md-8 offset-md-2 mb-4">
             <div class="card shadow">
-                <div class="card-header bg-primary text-white text-center">
-                    <h3>{% trans "Sign In" %}</h3>
+                <div class="card-header card-header-custom text-center">
+                    <h3 class="card-title-green">{% trans "Sign In" %}</h3>
                 </div>
                 <div class="card-body">
                     <p class="text-center mb-4">
-                        {% blocktrans %}Welcome back to Happy Belly Recipes! To leave a new recipe, please log in. If you have not created an account yet, then sign up first here: {% endblocktrans %}
+                        {% blocktrans %}Welcome back to Happy Belly Recipes! <br> To leave a new recipe, please log in.
+                        If you have not created an account yet, then sign up first here: {% endblocktrans %}
                         <a class="link" href="{{ signup_url }}">{% trans "sign up" %}</a>.
                     </p>
 
+                    <!-- Submit form -->
                     <form class="login" method="POST" action="{% url 'account_login' %}">
                         {% csrf_token %}
                         {{ form.as_p }}
@@ -27,11 +29,14 @@
                         <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
                         {% endif %}
 
+                        <!-- Submit button -->
                         <div class="text-center">
-                            <button class="btn btn-pink btn-lg w-100" type="submit">{% trans "Sign In" %}</button>
+                            <button class="btn btn-pink btn-lg" type="submit">{% trans "Sign In" %}</button>
                         </div>
                     </form>
                 </div>
+
+                <!-- Check if the user don't have an account and redirect to Sign up -->
                 <div class="card-footer text-center">
                     <p>{% trans "Don't have an account?" %} <a href="{{ signup_url }}" class="text-primary">{% trans "Sign up here" %}</a></p>
                 </div>

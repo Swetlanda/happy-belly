@@ -7,13 +7,13 @@
 {% block content %}
 <div class="container mt-4">
     <div class="row">
-        <div class="col-md-8 offset-md-2">
+        <div class="col-md-8 offset-md-2 mb-4">
             <div class="card shadow">
-                <div class="card-header bg-primary text-white text-center">
-                    <h3>Preview Your Recipe</h3>
+                <div class="card-header card-header-custom text-center">
+                    <h3 class="card-title-green">Preview Your Recipe</h3>
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">{{ preview_data.title }}</h5>
+                    <h5 class="card-title-green">{{ preview_data.title }}</h5>
                     <p class="card-text">{{ preview_data.description }}</p>
                     <p class="card-text"><strong>Ingredients:</strong> {{ preview_data.ingredients }}</p>
                     <p class="card-text"><strong>Instructions:</strong> {{ preview_data.instructions }}</p>
@@ -21,17 +21,20 @@
                     <p class="card-text"><strong>Tags:</strong> 
                         {{ preview_data.tags }}
                     </p>
+
                     {% if preview_data.image_url %}
                         <img src="{{ preview_data.image_url }}" alt="{{ preview_data.image_alt }}" class="img-fluid rounded">
                     {% else %}
-                        <img src="{% static 'images/default.jpg' %}" alt="Default Image" class="img-fluid rounded">
+                        <img src="{% static 'images/default.jpg' %}" alt="Default image of food preparation" class="img-fluid rounded">
                     {% endif %}
+
                 </div>
                 <div class="card-footer text-center">
-                    <form method="post">
+                    <form method="POST">
                         {% csrf_token %}
-                        <button type="submit" name="confirm" class="btn btn-pink mb-3">Submit for Approval</button>
-                        <button type="submit" name="edit" class="btn btn-green mb-3">Edit Again</button>
+                        <div class="d-flex flex-column flex-md-row justify-content-center">
+                            <button type="submit" name="confirm" class="btn btn-pink mb-2 mb-md-0 md-2">Submit for Approval</button>
+                            <button type="submit" name="edit" class="btn btn-green mb-2 mb-md-0 md-2">Edit Again</button>
                     </form>
                 </div>
             </div>
