@@ -7,9 +7,9 @@
     <h1 class="text-center mb-4">Search Results</h1>
 
     {% if query %}
-        <h4 class="text-center mb-4">Showing results for "{{ query }}"</h4>
+    <h5 class="text-center mb-4">Showing results for "{{ query }}"</h5>
     {% else %}
-        <h4 class="text-center mb-4">Showing all recipes</h4>
+    <h5 class="text-center mb-4">Showing all recipes</h5>
     {% endif %}
 
     <div class="row">
@@ -29,7 +29,7 @@
                     <p class="text-muted"><em>By {{ recipe.user.username }}</em></p>
                     <p class="text-muted">
                         {% for tag in recipe.tags.all %}
-                            <span class="badge badge-secondary">{{ tag.name }}</span>
+                            <span class="badge badge-primary">{{ tag.name }}</span>
                         {% endfor %}
                     </p>
                     <div class="text-center">
@@ -43,9 +43,9 @@
         {% endfor %}
     </div>
 
-    <!-- Pagination Controls -->
+    <!-- Pagination controls -->
     {% if is_paginated %}
-    <nav aria-label="Page navigation">
+    <nav aria-label="page navigation">
         <ul class="pagination justify-content-center">
             {% if page_obj.has_previous %}
             <li class="page-item">

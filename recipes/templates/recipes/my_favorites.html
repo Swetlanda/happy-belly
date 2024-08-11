@@ -8,14 +8,14 @@
 <div class="container mt-4 mb-4"> 
     <h1 class="text-center mb-4">My Favorite Recipes</h1>
 
-    <!-- Favorite Recipe Cards -->
+    <!-- Favorite recipe cards -->
     <div class="row">
         {% for favorite in favorites %}
         <div class="col-lg-3 col-md-6 col-sm-12 mb-3"> 
             <div class="card h-100">
                 <div class="image-container">
                     {% if not favorite.recipe.image %}
-                    <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="Default Image">
+                    <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="Image of cooking">
                     {% else %}
                     <img src="{{ favorite.recipe.image.url }}" class="card-img-top" alt="{{ favorite.recipe.image_alt }}">
                     {% endif %}
@@ -44,9 +44,9 @@
         {% endfor %}
     </div>
 
-    <!-- Pagination Controls -->
+    <!-- Pagination controls -->
     {% if is_paginated %}
-    <nav aria-label="Page navigation">
+    <nav aria-label="page navigation">
         <ul class="pagination justify-content-center">
             {% if page_obj.has_previous %}
             <li class="page-item">
