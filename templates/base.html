@@ -50,31 +50,34 @@
 
                     <!-- Main links (visible to all users) -->
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == home_url %}active{% endif %}"
+                        <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
                             href="{% url 'home' %}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == recipe_list_url %}active{% endif %}"
-                            href="{% url 'recipe_list' %}">Recipes</a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'recipe_list' %}active{% endif %}" 
+                        href="{% url 'recipe_list' %}">Recipes</a>
                     </li>
 
                     <!-- Links for logged-in users -->
                     {% if user.is_authenticated %}
                         <li class="nav-item">
-                            <a class="nav-link {% if request.path == create_recipe_url %}active{% endif %}"
+                            <a class="nav-link {% if request.resolver_match.url_name == 'create_recipe' %}active{% endif %}"
                             href="{% url 'create_recipe' %}">Add Recipe</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'account_logout' %}">Logout</a>
+                            <a class="nav-link {% if request.resolver_match.url_name == 'account_logout' %}active{% endif %}"
+                            href="{% url 'account_logout' %}">Logout</a>
                         </li>
 
                     <!-- Guests links (not logged-in users)-->
                     {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'account_signup' %}">Register</a>
+                            <a class="nav-link {% if request.resolver_match.url_name == 'account_signup' %}active{% endif %}" 
+                            href="{% url 'account_signup' %}">Register</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'account_login' %}">Login</a>
+                            <a class="nav-link {% if request.resolver_match.url_name == 'account_login' %}active{% endif %}"
+                            href="{% url 'account_login' %}">Login</a>
                         </li>
                     {% endif %}
                 </ul>
