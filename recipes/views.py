@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.db.models import Q
+from django.utils.html import strip_tags 
 
 class RecipeListView(generic.ListView):
     """
@@ -71,6 +72,7 @@ def view_recipe(request, recipe_id):
         else:
             messages.error(request, "You need to be logged in to add recipes to favorites.")
             return redirect('account_login')
+    
     context = {
         "recipe": retrieved_recipe,
         "is_favorite": is_favorite,
@@ -188,7 +190,17 @@ def edit_recipe(request, recipe_id):
             messages.error(request, "There was an error in your form submission. Please try again.")
 
     else:
-        form = RecipeForm(instance=retrieved_recipe)
+        # Convert HTML content to plain text before loading into the form 
+        ingredients_text = strip_tags(retrieved_recipe.ingredients).replace('&nbsp;', '').replace('\n', '')
+        instructions_text = strip_tags(retrieved_recipe.instructions).replace('&nbsp;', '').replace('\n', '')
+
+        # Initialise the form with current recipe data
+        form = RecipeForm(instance=retrieved_recipe, initial={
+             'ingredients': ingredients_text,
+            'instructions': instructions_text
+        })
+                
+        # Set the initial value for tags
         form.initial['tags'] = ', '.join([tag.name for tag in retrieved_recipe.tags.all()])
 
     context = {

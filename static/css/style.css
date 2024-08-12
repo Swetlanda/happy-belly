@@ -199,11 +199,18 @@ main {
 }
 
 /* Ingredient list styling */
-.ingredient-item, .instruction-item  {
+.ingredient-item, .instruction-item, .description-item  {
     font-family: 'Montserrat', sans-serif;
     color: var(--primary-dark-green);
     padding: 0.75rem 0; 
     margin-left: 1.5rem; 
+}
+
+.description-item {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--primary-dark-green);
+    padding: 0.75rem 0; 
+    margin-left: 0; /
 }
 
 .content-box {
