@@ -5,44 +5,49 @@
 {% block title %}My Favorites{% endblock %}
 
 {% block content %}
-<div class="container mt-4 mb-4"> 
+<div class="container mt-4 mb-4">
     <h1 class="text-center mb-4">My Favorite Recipes</h1>
 
     <!-- Favorite recipe cards -->
     <div class="row">
-        {% for favorite in favorites %}
-        <div class="col-lg-3 col-md-6 col-sm-12 mb-3"> 
-            <div class="card h-100">
-                <div class="image-container">
-                    {% if not favorite.recipe.image %}
-                    <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="Image of cooking">
-                    {% else %}
-                    <img src="{{ favorite.recipe.image.url }}" class="card-img-top" alt="{{ favorite.recipe.image_alt }}">
-                    {% endif %}
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title-green">{{ favorite.recipe.title }}</h5>
-                    <p class="card-text">{{ favorite.recipe.description|truncatechars:100 }}</p>
-                    <p class="text-muted"><em>By {{ favorite.recipe.user.username }}</em></p>
-                    <p class="text-muted">
-                        {% for tag in favorite.recipe.tags.all %}
-                            <span class="badge badge-primary">{{ tag.name }}</span>
-                        {% endfor %}
-                    </p>
-                    <div class="text-center">
-                        <a href="{% url 'view_recipe' favorite.recipe.id %}" class="btn btn-pink">View Recipe</a>
-                        <form method="post" action="{% url 'remove_from_favorites' favorite.recipe.id %}" class="mt-2">
-                            {% csrf_token %}
-                            <button type="submit" name="remove" class="btn btn-green">Remove</button>
-                        </form>
+        {% if favorites %}
+            {% for favorite in favorites %}
+                {% if favorite.recipe.id %}
+                    <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
+                        <div class="card h-100">
+                            <div class="image-container">
+                                {% if not favorite.recipe.image %}
+                                <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="Image of cooking">
+                                {% else %}
+                                <img src="{{ favorite.recipe.image.url }}" class="card-img-top" 
+                                alt="{{ favorite.recipe.image_alt }}">
+                                {% endif %}
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title-green">{{ favorite.recipe.title }}</h5>
+                                <p class="card-text">{{ favorite.recipe.description|striptags|truncatechars:100 }}</p>
+                                <p class="text-muted"><em>By {{ favorite.recipe.user.username }}</em></p>
+                                <p class="text-muted">
+                                    {% for tag in favorite.recipe.tags.all %}
+                                        <span class="badge badge-primary">{{ tag.name }}</span>
+                                    {% endfor %}
+                                </p>
+                            <div class="text-center">
+                                <a href="{% url 'view_recipe' favorite.recipe.id %}" class="btn btn-pink">View Recipe</a>
+                                <form method="POST" action="{% url 'remove_from_favorites' favorite.recipe.id %}" class="mt-2">
+                                    {% csrf_token %}
+                                    <button type="submit" name="remove" class="btn btn-green">Remove</button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        {% empty %}
-        <p class="text-center">You have no favorite recipes yet.</p>
+            {% endif %}
         {% endfor %}
-    </div>
+    {% else %}
+        <p class="text-center">You have no favorite recipes yet.</p>
+    {% endif %}
+</div>
 
     <!-- Pagination controls -->
     {% if is_paginated %}
@@ -61,24 +66,24 @@
             {% endif %}
 
             {% for num in page_obj.paginator.page_range %}
-                {% if page_obj.number == num %}
-                    <li class="page-item active"><span class="page-link">{{ num }}</span></li>
-                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-                    <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+            {% if page_obj.number == num %}
+            <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %} <li class="page-item"><a
+                    class="page-link" href="?page={{ num }}">{{ num }}</a></li>
                 {% endif %}
-            {% endfor %}
+                {% endfor %}
 
-            {% if page_obj.has_next %}
-            <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
-                    NEXT &raquo;
-                </a>
-            </li>
-            {% else %}
-            <li class="page-item disabled">
-                <span class="page-link">NEXT &raquo;</span>
-            </li>
-            {% endif %}
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                        NEXT &raquo;
+                    </a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link">NEXT &raquo;</span>
+                </li>
+                {% endif %}
         </ul>
     </nav>
     {% endif %}
