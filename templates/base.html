@@ -1,15 +1,20 @@
 {% load static %}
 
 {% url 'home' as home_url %}
+{% url 'welcome' as welcome_url %}
 {% url 'account_login' as login_url %}
 {% url 'account_signup' as signup_url %}
 {% url 'account_logout' as logout_url %}
 {% url 'recipe_list' as recipe_list_url %}
-{% url 'create_recipe' as create_recipe_url %}
-{% url 'recipe_search' as recipe_search_url %}
 {% url 'my_recipes' as my_recipes_url %}
 {% url 'my_favorites' as my_favorites_url %}
-{% url 'welcome' as welcome_url %}
+{% url 'create_recipe' as create_recipe_url %}
+{% url 'edit_recipe' as edit_recipe_url %}
+{% url 'recipe_preview' as recipe_preview_url %}
+{% url 'view_recipe' as view_recipe_url %}
+{% url 'delete_recipe' as delete_recipe_url %}
+{% url 'recipe_search' as recipe_search_url %}
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -50,15 +55,15 @@
 
                     <!-- Main links (visible to all users) -->
                     <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
-                            href="{% url 'home' %}">Home</a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'home' or request.resolver_match.url_name == 'welcome' %}active{% endif %}"
+                            href="{% url 'home' %}">Home</a> 
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {% if request.resolver_match.url_name == 'recipe_list' %}active{% endif %}" 
                         href="{% url 'recipe_list' %}">Recipes</a>
                     </li>
 
-                    <!-- Links for logged-in users -->
+                    <!-- Links for logged-in users, Welcome page is instead of Homepage -->
                     {% if user.is_authenticated %}
                         <li class="nav-item">
                             <a class="nav-link {% if request.resolver_match.url_name == 'create_recipe' %}active{% endif %}"
