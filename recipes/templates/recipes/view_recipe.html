@@ -6,69 +6,55 @@
 
 {% block content %}
 <div class="container mt-4">
-    <div class="row">
-        <div class="col-lg-12">
-            <!-- Recipe Title -->
-            <h1 class="mb-3">{{ recipe.title }}</h1>
-            
-            <!-- Recipe Description -->
-            <p class="lead mb-4">{{ recipe.description }}</p>
-            
-            <!-- Posted by User and Date -->
-            <p class="text-muted mb-2">Posted by {{ recipe.user }} on {{ recipe.created_on|date:"F j, Y" }}</p>
-            
-            <!-- Tags -->
-            <div class = "mb-4">
+    <div class="row mb-4">
+        <!-- Recipe image if there is one or default image -->
+        <div class="col-md-6 text-center">
+            {% if recipe.image %}
+            <img src="{{ recipe.image.url }}" class="img-fluid rounded" alt="{{ recipe.image_alt }}"
+                style="max-width: 100%; height: auto;">
+            {% else %}
+            <img src="{% static 'images/default.jpg' %}" class="img-fluid rounded" alt="Image of cooking"
+                style="max-width: 100%; height: auto;">
+            {% endif %}
+        </div>
+
+        <!-- Recipe details -->
+        <div class="col-md-6">
+            <h1 class="card-title-green">{{ recipe.title }}</h1>
+            <p class="lead">{{ recipe.description }}</p>
+            <p class="text-muted">Posted by {{ recipe.user }} on {{ recipe.created_on|date:"F j, Y" }}</p>
+            <div class="mb-4">
                 {% for tag in recipe.tags.all %}
                 <span class="badge badge-primary">{{ tag.name }}</span>
                 {% endfor %}
             </div>
-        </div>
-
-    <!-- Recipe Image -->
-    <div class="row">
-        <div class="col-12">
-            <div class="mb-4 text-center">
-                {% if recipe.image %}
-                <img src="{{ recipe.image.url }}" class="img-fluid rounded" alt="{{ recipe.image_alt }}">
-                {% else %}
-                <img src="{% static 'images/default.jpg' %}" class="img-fluid rounded" alt="Default Image">
-                {% endif %}
-            </div>
-        </div>
-    </div>
-
-    <!-- Servings and Action Buttons -->
-    <div class="row mb-4">
-        <div class="col-lg-6">
-            <!-- Servings -->
             <p class="font-weight-bold">Servings: <span>{{ recipe.get_serving_display }}</span></p>
         </div>
-
-        <div class="col-lg-6 text-end">
-            <!-- Action Buttons -->
-            {% if request.user == recipe.user %}
-            <a href="{% url 'edit_recipe' recipe.id %}" class="btn btn-warning me-2">Edit</a>
-            <a href="{% url 'delete_recipe' recipe.id %}" class="btn btn-danger me-2">Delete</a>
-            {% endif %}
-            {% if request.user.is_authenticated %}
-                <form method="post" class="d-inline">
-                    {% csrf_token %}
-                    {% if is_favorite %}
-                        <button type="submit" name="remove_from_favorites" class="btn btn-danger">Remove from Favorites</button>
-                    {% else %}
-                        <button type="submit" name="add_to_favorites" class="btn btn-primary">Add to Favorites</button>
-                    {% endif %}
-                </form>
-            {% endif %}
-        </div>
     </div>
-    
-    <!-- Ingredients and Instructions -->
+
+    <!-- Action buttons -->
+    <div class="d-flex flex-wrap justify-content-center mb-4">
+        {% if request.user == recipe.user %}
+        <a href="{% url 'edit_recipe' recipe.id %}" class="btn btn-pink mx-4 mb-2">Edit</a>
+        <a href="{% url 'delete_recipe' recipe.id %}" class="btn btn-danger mx-4 mb-2">Delete</a>
+        {% endif %}
+        {% if request.user.is_authenticated %}
+        <form method="POST" class="d-inline">
+            {% csrf_token %}
+            {% if is_favorite %}
+            <button type="submit" name="remove_from_favorites" class="btn btn-danger mx-4 mb-2">Remove from Favorites</button>
+            {% else %}
+            <button type="submit" name="add_to_favorites" class="btn btn-green mx-4 mb-2">Add to Favorites</button>
+            {% endif %}
+        </form>
+        {% endif %}
+    </div>
+
+    <!-- Ingredients and instructions -->
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-md-6">
             <div class="content-box">
-                <h3 class="mb-3">Ingredients</h3>
+                <h3 class="mb-4">Ingredients</h3>
                 <ul class="list-unstyled">
                     {% for ingredient in recipe.ingredients.splitlines %}
                     <li class="ingredient-item">{{ ingredient }}</li>
@@ -76,9 +62,9 @@
                 </ul>
             </div>
         </div>
-        <div class="col-lg-8">
+        <div class="col-md-6">
             <div class="content-box">
-                <h3 class="mb-3">Instructions</h3>
+                <h3 class="mb-4">Instructions</h3>
                 <ol class="list-unstyled">
                     {% for instruction in recipe.instructions.splitlines %}
                     <li class="instruction-item">{{ instruction }}</li>

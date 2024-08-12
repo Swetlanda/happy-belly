@@ -5,40 +5,40 @@
 {% block title %}Welcome{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
+<div class="container mt-4">
     <h1 class="text-center">Welcome, {{ user.username }}!</h1>
     <p class="text-center">We're glad to have you back at Happy Belly Recipes.</p>
 
     <!-- Create New Recipe Button -->
-    <div class="row mt-5">
+    <div class="row mt-4">
         <div class="col-lg-4 mb-4 d-flex align-items-stretch">
             <div class="card shadow w-100">
                 <div class="card-body text-center">
                     <h3 class="card-title-green"><i class="fa-solid fa-bowl-food"></i> Create New Recipe</h3>
                     <p class="card-text">Add your recipes and share them with the community.</p>
-                    <a href="{% url 'create_recipe' %}" class="btn btn-success">Add Recipe</a>
+                    <a href="{% url 'create_recipe' %}" class="btn btn-pink">Add Recipe</a>
                 </div>
             </div>
         </div>
 
-        <!-- My Recipes Card -->
+        <!-- My recipes card -->
         <div class="col-lg-4 mb-4 d-flex align-items-stretch">
             <div class="card shadow w-100">
                 <div class="card-body text-center">
                     <h3 class="card-title-green"><i class="fa-solid fa-paperclip"></i> My Recipes</h3>
                     <p class="card-text">View and manage all the recipes you have created.</p>
-                    <a href="{% url 'my_recipes' %}" class="btn btn-primary">My Recipes</a>
+                    <a href="{% url 'my_recipes' %}" class="btn btn-pink">My Recipes</a>
                 </div>
             </div>
         </div>
 
-        <!-- My Favorites Card -->
+        <!-- My favorites card -->
         <div class="col-lg-4 mb-4 d-flex align-items-stretch">
             <div class="card shadow w-100">
                 <div class="card-body text-center">
                     <h3 class="card-title-green"><i class="fa-solid fa-heart"></i> My Favorites</h3>
                     <p class="card-text">Access all the recipes you've added to your favorites.</p>
-                    <a href="{% url 'my_favorites' %}" class="btn btn-primary">My Favorites</a>
+                    <a href="{% url 'my_favorites' %}" class="btn btn-pink">My Favorites</a>
                 </div>
             </div>
         </div>

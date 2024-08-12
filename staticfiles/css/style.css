@@ -1,10 +1,10 @@
 /* Color variables based on the palette */
 :root {
-    --primary-light-green: #a6cc99;  /* Light green for backgrounds */
-    --primary-medium-green: #629a74; /* Medium green for buttons and nav */
-    --primary-dark-green: #3e612d;   /* Dark green for text and borders */
-    --accent-dark-violet: #572c48;   /* Dark violet for accenting elements */
-    --accent-pink: #c65792;          /* Pink for hover states and highlights */
+    --primary-light-green: #a6cc99;  /* Light green  */
+    --primary-medium-green: #629a74; /* Medium green */
+    --primary-dark-green: #3e612d;   /* Dark green */
+    --accent-dark-violet: #572c48;   /* Dark violet for highlights */
+    --accent-pink: #c65792;          /* Pink for highlights */
 }
 
 /* General styling */
@@ -14,6 +14,16 @@ body {
     font-family: 'Montserrat', sans-serif;
     margin: 0;  
     padding: 0; 
+}
+
+main {
+    margin: 0 !important;
+    padding: 20px 0 0 0 !important; 
+    position: relative;
+}
+
+.text-green {
+    color: var(--primary-dark-green);
 }
 
 /* Navbar */
@@ -51,23 +61,6 @@ body {
     border-color: white;
 }
 
-.navbar-toggler-icon {
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='white' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
-}
-
-/* Search Button */
-.btn-outline-success {
-    color: white;
-    border-color: white;
-    transition: background-color 0.3s ease, color 0.3s ease, border-radius 0.3s ease;
-}
-
-.btn-outline-success:hover, .btn-outline-success:focus {
-    background-color: white;
-    color: var(--primary-medium-green);
-    border-radius: 15px; 
-}
-
 /* Main Banner */
 .jumbotron {
     position: relative;
@@ -75,7 +68,6 @@ body {
     color: var(--primary-light-green);
     padding: 7em 2rem; 
     border-radius: 15px;
-    background-image: url('{% static "images/banner.jpg" %}'); /* Not sure what to do with it */
     font-family: 'Bodoni Moda', serif;
     text-align: center;
 }
@@ -112,7 +104,19 @@ body {
     color: white; 
 }
 
-.jumbotron .btn {
+.jumbotron-welcome {
+    font-size: 4rem; 
+    font-weight: bold; 
+    color: white;     
+}
+
+.jumbotron-message {
+    font-size: 1.5rem; 
+    font-weight: 400;  
+    color: white;     
+}
+
+.jumbotron .jumbotron-btn {
     background-color: var(--accent-pink);
     border: var(--accent-pink);
     color: white;
@@ -121,13 +125,17 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.jumbotron .btn:hover {
+.jumbotron .jumbotron-btn:hover {
     background-color: var(--accent-dark-violet);
     color: white;
 }
 
-/* Cards */
+
+/* General cards style */
 .card {
+    display: block; 
+    visibility: visible; /
+    opacity: 1; 
     margin-top: 1rem;
     border: 1px solid var(--primary-medium-green); 
     background-color: white; 
@@ -141,28 +149,41 @@ body {
     border-radius: 10px; 
 }
 
+/* White card title */
 .card-title {
+    color: white;
+    font-family: 'Bodoni Moda', serif;
+    font-weight: bold;
+}
+
+/* Green card title */
+.card-title-green {
     color: var(--primary-dark-green);
     font-family: 'Bodoni Moda', serif;
     font-weight: bold;
 }
 
+/* Custom card header background */
+.card-header-custom {
+    background-color: var(--primary-light-green);
+}
+
+/* Custom card header text color */
+.card-header-text-custom {
+    color: var(--primary-dark-green);
+}
+
+/* Dark green card text */
 .card-text {
     color: var(--primary-dark-green);
 }
 
-.col-lg-3, .col-md-6, .col-sm-12 {
-    margin-bottom: 0.5rem; 
-}
-
-.text-center.mt-2 {
-    margin-top: 1rem; 
-}
-
-/* Form Titles */
-.card-header.bg-primary.text-white.text-center {
-    background-color: var(--primary-medium-green) !important;
-    color: white !important;
+/* Image inside cards */
+.card img {
+    width: 100%; 
+    height: 12rem; 
+    object-fit: cover; 
+    border-radius: 0.5rem; 
 }
 
 /* Footer */
@@ -213,7 +234,7 @@ p {
     color: var(--primary-dark-green);
 }
 
-/* Flash Messages */
+/* Flash messages */
 .alert-success {
     background-color: var(--primary-medium-green);
     border-color: var(--primary-medium-green);
@@ -228,52 +249,43 @@ p {
     border-radius: 10px; 
 }
 
-/* Buttons */
-.btn-primary {
-    background-color: var(--primary-medium-green); 
-    border-color: var(--primary-medium-green);
-    color: white;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: bold;
+.alert-info {
+    background-color: var(--primary-light-green);
+    border-color: var(--primary-light-green);
+    color: var(--primary-dark-green); 
     border-radius: 10px; 
-    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.btn-primary:hover {
-    background-color: var(--accent-dark-violet); 
-    border-color: var(--accent-dark-violet);
-    color: white;
+.alert-warning {
+    background-color: var(--accent-pink);
+    border-color: var(--accent-pink);
+    color: var(--accent-dark-violet); 
+    border-radius: 10px; 
 }
 
-/* Adjust main and message elements */
-.flex-shrink-0 {
-    padding-top: 0 !important;  
-    padding-bottom: 0 !important;  
-}
-
+/* Logged-in message adjastments */
 p.logged-in-message {
-    margin: 0 !important;  
-    padding: 0 !important; 
-    line-height: 1 !important; 
+    margin: 0; !important;   
+    padding: 0; !important;   
+    line-height: 1; !important;   
     color: var(--primary-dark-green);
     font-size: 0.9rem;  
     font-family: 'Montserrat', sans-serif;
     display: inline-block;
     position: absolute;  
-    top: 0;  
-    right: 20px;  
-    z-index: 10; 
+    top: 0.5rem;  
+    right: 0; 
+    z-index: 100; 
     text-align: right;  
-}
-
-/* Adjust container */
-main {
-    margin: 0 !important; 
-    padding: 0 !important; 
-    position: relative;  
+    margin-bottom: 0.5rem; !important;
 }
 
 /* Pagnation controls style */
+.pagination {
+    margin-top: 1rem;  
+    margin-bottom: 1rem;  
+}
+
 .pagination .page-item .page-link {
     color: var(--primary-dark-green);
     border: 1px solid var(--primary-medium-green);
@@ -293,20 +305,14 @@ main {
     border-color: var(--accent-dark-violet);
 }
 
-/* Style tags on Recipe list page */
+/* Style for tags */
 .badge-primary {
     background-color: var(--primary-dark-green); 
     color: white;
     margin-right: 5px;
 }
 
-.badge-secondary {
-    background-color: var(--primary-dark-green); 
-    color: white;
-    margin-right: 5px;
-}
-
-/* Button Styles for CRUD functionality*/
+/* Buttons */
 .btn {
     padding: 10px 20px;
     font-weight: bold;
@@ -314,44 +320,64 @@ main {
     transition: background-color 0.3s ease, color 0.3s ease;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    border: none;
 }
 
-.btn-primary {
+/* Green button (extends .btn) */
+.btn-green {
     background-color: var(--primary-medium-green);
     border: none;
     color: white;
+    width: 80%;  
+    max-width: 12.5rem;
+    display: block;  
+    margin: 0 auto;  
 }
 
-.btn-primary:hover {
+.btn-green:hover {
     background-color: var(--accent-dark-violet);
+    color: white;
 }
 
-.btn-warning {
+/* Pink button (extends .btn) */
+.btn-pink {
     background-color: var(--accent-pink);
     border: none;
     color: white;
+    width: 80%;  
+    max-width: 12.5rem;  
+    display: block;  
+    margin: 0 auto; 
 }
 
-.btn-warning:hover {
-    background-color: var(--accent-dark-violet);
-}
-
-.btn-success {
-    background-color: var(--primary-medium-green);
-    border: none;
-    color: white;
-}
-
-.btn-success:hover {
-    background-color: var(--accent-dark-violet);
-}
-
+.btn-pink:hover {
+    background-color: var(--accent-dark-violet); 
+    color: white;               
+} 
+ 
+/* Red button (extends .btn) */
 .btn-danger {
     background-color: #dc3545;
-    border: none;
     color: white;
+    width: 80%;  
+    max-width: 12.5rem;
+    display: block;  
+    margin: 0 auto; 
 }
 
 .btn-danger:hover {
     background-color: #bd2130;
+}
+
+/* Search button */
+.btn-outline-success {
+    color: white;
+    border-color: white;
+    transition: background-color 0.3s ease, color 0.3s ease, border-radius 0.3s ease;
+}
+
+.btn-outline-success:hover, .btn-outline-success:focus {
+    background-color: white;
+    color: var(--primary-medium-green);
+    border-radius: 15px; 
 }

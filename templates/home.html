@@ -6,11 +6,12 @@
 
 {% block content %}
 <div class="container mt-4">
+
     <!-- Hero/Banner Section -->
-    <div class="jumbotron text-center" style="background-image: url('{% static 'images/banner.jpg' %}'); background-size: cover; color: white;">
-        <h1 class="display-4">Welcome to Happy Belly Recipes!</h1>
-        <p class="lead">Discover and share amazing recipes from around the world.</p>
-        <a class="btn btn-primary btn-lg" href="{% url 'account_signup' %}" role="button">Sign Up</a>
+    <div class="jumbotron" style="background-image: url('{% static 'images/banner.jpg' %}');">
+        <h1 class="jumbotron-welcome">Welcome to Happy Belly Recipes!</h1>
+        <p class="jumbotron-message">Discover and share amazing recipes from around the world.</p>
+        <a class="jumbotron-btn btn btn-lg" href="{% url 'account_signup' %}" role="button">Sign Up</a>
     </div>
 
     <!-- Main Content with Cards -->
@@ -18,7 +19,7 @@
         <div class="col-md-6">
             <div class="card mb-3">
                 <div class="card-body">
-                    <h5 class="card-title">Discover Amazing Recipes</h5>
+                    <h5 class="card-title-green">Discover Amasing Recipes</h5>
                     <p class="card-text">
                         Explore a wide variety of delicious recipes tailored to suit every taste and occasion. Join our community and start cooking today!
                     </p>
@@ -28,7 +29,7 @@
         <div class="col-md-6">
             <div class="card mb-3">
                 <div class="card-body">
-                    <h5 class="card-title">Join Our Community</h5>
+                    <h5 class="card-title-green">Join Our Community</h5>
                     <p class="card-text">
                         Become a member of Happy Belly and share your culinary creations with others. Enjoy tips, tricks, and more from fellow food enthusiasts.
                     </p>
