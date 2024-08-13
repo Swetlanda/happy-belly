@@ -1,25 +1,24 @@
-{% load static %}
-
-{% url 'home' as home_url %}
-{% url 'welcome' as welcome_url %}
-{% url 'account_login' as login_url %}
-{% url 'account_signup' as signup_url %}
-{% url 'account_logout' as logout_url %}
-{% url 'recipe_list' as recipe_list_url %}
-{% url 'my_recipes' as my_recipes_url %}
-{% url 'my_favorites' as my_favorites_url %}
-{% url 'create_recipe' as create_recipe_url %}
-{% url 'edit_recipe' as edit_recipe_url %}
-{% url 'recipe_preview' as recipe_preview_url %}
-{% url 'view_recipe' as view_recipe_url %}
-{% url 'delete_recipe' as delete_recipe_url %}
-{% url 'recipe_search' as recipe_search_url %}
-
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+    {% load static %}
+
+    {% url 'home' as home_url %}
+    {% url 'welcome' as welcome_url %}
+    {% url 'account_login' as login_url %}
+    {% url 'account_signup' as signup_url %}
+    {% url 'account_logout' as logout_url %}
+    {% url 'recipe_list' as recipe_list_url %}
+    {% url 'my_recipes' as my_recipes_url %}
+    {% url 'my_favorites' as my_favorites_url %}
+    {% url 'create_recipe' as create_recipe_url %}
+    {% url 'edit_recipe' as edit_recipe_url %}
+    {% url 'recipe_preview' as recipe_preview_url %}
+    {% url 'view_recipe' as view_recipe_url %}
+    {% url 'delete_recipe' as delete_recipe_url %}
+    {% url 'recipe_search' as recipe_search_url %}
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Happy Belly{% endblock %}</title>
@@ -127,7 +126,7 @@
     <!-- Footer -->
     <footer class="footer mt-auto py-3">
         <p class="m-0 mb-2 text-center">
-            {% block copyright %} &#169 Happy Belly 2024{% endblock %}
+            {% block copyright %} &#169; Happy Belly 2024{% endblock %}
         </p>
         <p class="m-0 text-center">
             <a href="https://www.facebook.com" target="_blank" aria-label="Facebook"><i

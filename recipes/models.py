@@ -8,9 +8,10 @@ from django.dispatch import receiver
 
 
 STATUS_CHOICES = [
-        (0, "Draft"), 
+        (0, "Draft"),
         (1, "Published")
 ]
+# Defines choices for the status field of the recipe - draft or published.
 
 SERVING_CHOICES = [
         (2, '2 people'),
@@ -18,18 +19,24 @@ SERVING_CHOICES = [
         (6, '6 people'),
         (8, '8 people'),
 ]
+# Defines choices for the serving field of the recipe - 2, 4, 6 or 8 servings.
 
-# Create your models here.
+
+# Custom-made model Favorite
 class Favorite(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     recipe = models.ForeignKey('Recipe', on_delete=models.SET_NULL, null=True)
 
     class Meta:
         unique_together = ('user', 'recipe')
+    # Ensures that a user can only favorite a recipe once.
 
     def __str__(self):
         return f'{self.user.username} - {self.recipe.title}'
+    # Returns a string representation of the Favorite object.
 
+
+# Custom-made model Recipe
 class Recipe(models.Model):
     title = models.CharField(max_length=150, unique=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
@@ -44,16 +51,19 @@ class Recipe(models.Model):
     serving = models.IntegerField(choices=SERVING_CHOICES, default=4)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
-   
+
     class Meta:
         ordering = ["-created_on"]
+    # Orders the recipes by creation date, with the most recent first.
 
     def __str__(self):
         return f'"{self.title}" by {self.user}'
+    # Returns a string representation of the Recipe object.
 
     def generate_unique_slug(self):
         """
-        Generates a unique slug for the recipe. If the generated slug already exists,
+        Generates a unique slug for the recipe.
+        If the generated slug already exists,
         appends a unique suffix to make it unique.
         """
         original_slug = slugify(self.title)
@@ -66,17 +76,12 @@ class Recipe(models.Model):
             unique_suffix += 1
         return slug
 
+
 @receiver(pre_save, sender=Recipe)
 def populate_slug(sender, instance, **kwargs):
     """
-    This function automatically generates a unique slug from the recipe title 
+    This function automatically generates a unique slug from the recipe title
     using the generate_unique_slug method.
     """
     if not instance.slug:
         instance.slug = slugify(instance.title)
-
-    
-
-    
-
-
