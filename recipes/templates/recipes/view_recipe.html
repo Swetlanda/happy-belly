@@ -21,7 +21,7 @@
         <!-- Recipe details -->
         <div class="col-md-6">
             <h1 class="card-title-green">{{ recipe.title }}</h1>
-            <p class="description-item">{{ recipe.description|safe }}</p>
+            <p class="description-item">{{ recipe.description |safe }}</p> 
             <p class="text-muted"><em>Posted by {{ recipe.user }} on {{ recipe.created_on|date:"F j, Y" }}</em></p>
             <div class="mb-4">
                 {% for tag in recipe.tags.all %}
@@ -57,7 +57,7 @@
         <div class="col-md-6">
             <div class="content-box">
                 <h3 class="mb-4">Ingredients</h3>
-                <ul class="list-unstyled"></ul>
+                <ul>
                     {% for ingredient in recipe.ingredients.splitlines %}
                     <li class="ingredient-item">{{ ingredient|safe }}</li>  <!-- safe filter added to remove html tags -->
                     {% endfor %}
@@ -67,11 +67,11 @@
         <div class="col-md-6">
             <div class="content-box">
                 <h3 class="mb-4">Instructions</h3>
-                <ul class="list-unstyled">
+                <ol class="list-unstyled">
                     {% for instruction in recipe.instructions.splitlines %}
                     <li class="instruction-item">{{ instruction|safe }}</li>  <!-- safe filter added to remove html tags-->
                     {% endfor %}
-                </ul>
+                </ol>
             </div>
         </div>
     </div>

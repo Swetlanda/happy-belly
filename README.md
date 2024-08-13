@@ -9,11 +9,11 @@ Welcome to Happy Belly Recipes – a responsive website where users can find eas
 This website was created as a portfolio project for the Full-Stack Software Development Programme by the Code Institute .
 
 # Table of Contents
-- Purpose and Target Audience
+- Purpose and target audience
 - UX
-- Agile Development
+- Agile development
 - Features implemented
-- Features Left to Implement
+- Features for future development
 - Technology used
 - Testing and validation
 - Bugs
@@ -86,6 +86,66 @@ Additional model features:
 - Unique constraint: Ensures a user can favorite a recipe only once.
 - Null handling: If a user or recipe is deleted, the corresponding favorite entry is set to NULL rather than being deleted.
 
+## User Stories Overview
+
+I organised all user stories into Epics and defined acceptance criteria for each one. I also applied MOSCOW prioritasion for all user stories.
+
+**Epic: User registration and authentication**
+- **User registration**: As a visitor, I want to create a personal account so that I can create and manage my own recipes **(MUST)**.
+  - AC1: A visitor can register an account using a username.
+  - AC2: Once registered, the user can log in to their account.
+  - AC3: When logged in, the user can create and manage their recipes.
+
+- **User login and logout**: As a registered user, I want to log in and log out of my account so that I can securely access my personal recipes and comments **(MUST)**.
+  - AC1: A registered user can log in using their username and password.
+  - AC2: A logged-in user can log out of their account.
+
+**Epic: Recipe management**
+- **View recipes**: As a visitor, I want to view a list of recipes so that I can browse and select recipes that I like to view in detail **(MUST)**.
+  - AC1: A visitor can see a list of recipes to browse.
+  - AC2: A visitor can click on a recipe title to see its detailed view.
+
+- **Create recipe**: As a logged-in user, I want to add a new recipe so that I can share it with other users **(MUST)**.
+  - AC1: A logged-in user can fill out a form with the recipe details.
+  - AC2: After submission, the new recipe is sent to admin for approval and publishing.
+
+- **Update recipe**: As a logged-in user, I want to edit a recipe I created so that I can update its details **(MUST)**.
+  - AC1: A logged-in user can navigate to their recipe.
+  - AC2: The user can edit the recipe details through a form.
+  - AC3: Upon form submission, the recipe details are updated.
+
+- **Delete recipe**: As a logged-in user, I want to delete a recipe I created so that I can remove it from the website **(MUST)**.
+  - AC1: A logged-in user can navigate to their recipe.
+  - AC2: The user can delete the recipe by confirming the deletion.
+  - AC3: The recipe is removed from the website.
+
+- **Search recipe**: As a visitor, I want to search to find quickly a specific recipe **(SHOULD)**.
+  - AC1: There is a search bar in the navigation.
+  - AC2: Users can search recipes using various parameters, including tags.
+  - AC3: The search results display relevant recipes.
+
+- **Favourite recipes**: As a logged-in user, I want to mark recipes as favourites so that I can easily find them later **(SHOULD)**.
+  - AC1: A logged-in user can click a button to add a recipe to their favourites.
+  - AC2: Favourited recipes are saved to the user’s account.
+  - AC3: The user can view a list of their favourited recipes.
+
+- **My recipes**: As a logged-in user, I want to see all recipes that I created earlier so that I can easily see them in one place **(SHOULD)**.
+  - AC1: A logged-in user can click a button to see a list of their recipes.
+
+**Epic: Administrative controls**
+- **Manage Recipes**: As a site admin, I want to create, read, update, and delete any recipes so that I can manage the website content **(MUST)**.
+  - AC1: A logged-in admin can create a new recipe.
+  - AC2: A logged-in admin can view any recipe.
+  - AC3: A logged-in admin can update any recipe.
+  - AC4: A logged-in admin can delete any recipe.
+
+**Epic: Documentation**
+- **Readme file**: As a site admin, I want to have a Readme file with documentation for the project **(MUST)**.
+  - AC1: It is possible to read documentation about the project in the Readme file.
+
+- **Testing**: As a site visitor, I want to click on all links without errors **(MUST)**.
+  - AC1: As a site visitor, I can click on all links and all work fine without errors.
+
 ## Design
 
 ### Wireframes
@@ -93,17 +153,130 @@ The Happy Belly recipes website is designed with Bootstrap to allow for responsi
 
 I used Balsamiq to create the wireframes. They were served as initial thnking and evolved during the build in line with Agile methodology.
 
-### Features
-- Recipe listing:
-	- Recipes are displayed as cards with an image, title, description, tags, user and posting date.
-	- Recipe listings are paginated by 8 to improve loading times and user experience, with navigation controls for easy browsing.
-	- Each recipe card is clickable, leading to a full detailed view of the recipe.
-	
-Welcome page
 
-- Search:
-	- Users can search for recipes by title, description, ingredients, or tags.
+**Homepage:** 
 
+<img src="static/images/documentation/homepage_desktop.png" alt="wireframe_homepage_desktop" width="600">
+<img src="static/images/documentation/homepage_mobile.png" alt="wireframe_homepage_mobile" width="200">    
+
+
+**Welcome page:** 
+
+<img src="static/images/documentation/welcome_desktop.png" alt="wireframe_welcome_desktop" width="600">
+<img src="static/images/documentation/welcome_mobile.png" alt="wireframe_welcome_mobile" width="200">    
+
+
+**List of recipes:**
+
+<img src="static/images/documentation/recipes_list_desktop.png" alt="wireframe_recipes_list_desktop" width="600">
+<img src="static/images/documentation/recipes_list_mobile.png" alt="wireframe_recipes_list_mobile" width="200">  
+
+
+**View recipe:**
+
+<img src="static/images/documentation/view_recipe_desktop.png" alt="wireframe_view_recipe_desktop" width="600">
+<img src="static/images/documentation/view_recipe_mobile.png" alt="wireframe_view_recipe_mobile" width="200"> 
+
+
+### Color palette
+I created the following color palette for the project, using bright, vivid colors with strong contrast to ensure the design is visually appealing and provides a positive user experience.
+
+<img src="static/images/documentation/color_palette.png" alt="color-palette" width="600">
+
+
+### Typography
+I used the Google fonts Montserrat and Bodoni Moda for consistent typography across the site.
+
+<img src="static/images/documentation/fonts.png" alt="fonts" width="600">
+
+### Branding
+I created the logo for Happy Belly recipe with the use of ChatCPT.
+
+<img src="static/images/logo.jpg" alt="logo-Happy-Belly" width="400">
+
+
+# Agile Development
+During the development of the Happy Belly website, I implemented an Agile methodology and utilized a Kanban board on GitHub linked to my repository.
+
+The Kanban board was divided into the following columns:
+- **To do**: This column contains user stories that are ready for development.
+- **In Progress**: This column tracks user stories currently being worked on. At the time of the screenshot, two user stories (Testing and Readme files) are still in progress. These will be moved to "Done" upon completion.
+- **Done**: This column holds all the tasks that have been successfully completed.
+- **Backlog**: This column includes user stories that I was unable to complete (labeled as WON'T and COULD in MOSCOW prioritisation). These items can be revisited for future development.
+
+**Kanban board:**<br/> 
+<img src="static/images/documentation/project_board.png" alt="project_board" width="650"> 
+
+The following User Stories were not completed during this project and are left for future development.
+
+**Epic: Comment and rating (COULD)**
+- **Create a comment**: As a logged-in user, I want to leave comments on a recipe so that I can provide feedback or ask questions.
+  - AC1: A logged-in user can submit a comment on a recipe.
+  - AC2: Comments are displayed under the recipe once approved by an admin.
+  - AC3: Users can reply to comments to create a thread.
+
+- **Read other comments**: As a user, I want to read other users’ comments on a recipe.
+  - AC1: A user can read other users’ comments.
+
+- **Modify or delete comment**: As a logged-in user, I want to edit or delete my comment on a recipe so that I can correct or remove my feedback.
+  - AC1: A logged-in user can edit their comment.
+  - AC2: A logged-in user can delete their comment.
+
+- **Rate a recipe**: As a logged-in user, I want to rate a recipe so that I can share my opinion on its quality.
+  - AC1: A user can submit a rating for a recipe.
+
+**Epic: Administrative controls (WON’T)**
+- **Approve Comments**: As a site admin, I want to approve or disapprove comments so that I can filter out inappropriate content.
+  - AC1: A logged-in admin can approve comments.
+  - AC2: A logged-in admin can disapprove comments.
+
+- **Reset password**: As a logged-in user, I want to reset my password so that I can regain access to my account if I forget my password.
+  - AC1: A user can request a password reset link via email.
+  - AC2: A user can reset their password using the link provided.
+
+- **Change profile information**: As a logged-in user, I want to update my profile information so that my account details are current.
+  - AC1: A user can update their email, username, and other personal information.
+  - AC2: The updated profile information is saved and displayed correctly.
+
+- **Contact form**: As a visitor, I want to contact the site admins so that I can ask questions or report issues.
+  - AC1: A visitor can fill out a contact form with their inquiry.
+  - AC2: The message is sent to the site admins.
+
+
+# Features Implemented
+
+- **Homepage**
+  - **Structure:** The homepage includes a navbar, hero section with a clear CTA, and a footer. The main content features a hero image with a "Sign Up" button and a brief description of the website's purpose and registration benefits.
+
+- **User Account Management**
+  - **User Registration & Login:** Visitors can create an account with a username, log in securely, and manage their recipes.
+  - **Welcome Page:** After registration, users see a personalized welcome message with links to create a recipe, view their recipes, and access their favorites.
+
+- **Recipe Management**
+  - **Recipe Listings:** Recipes are displayed as paginated cards with images, titles, descriptions, and tags. All users can view the listings, and each card links to a detailed recipe view.
+  - **Create, Edit, & Delete Recipes:** Logged-in users can create, update, or delete their recipes using simple forms. Recipes are sent for admin approval before publishing.
+
+- **Search & Favorites**
+  - **Search:** Users can search for recipes by title, description, ingredients, or tags via a search bar in the navigation.
+  - **Favorites:** Logged-in users can mark recipes as favorites and view their favorited recipes on a dedicated page.
+
+- **Administrative Controls**
+  - **Manage Recipes:** Admins can create, view, update, or delete any recipe, ensuring proper content management across the site.
+
+- **Documentation & Links**
+  - **Readme & Links:** The project includes comprehensive documentation in a Readme file. All links on the site are functional, ensuring a smooth user experience.
+
+# Features for Future Development
+
+- **Commenting & Rating**
+  - **Comments:** Logged-in users can comment on recipes, read others' comments, and engage in discussions. They can also edit or delete their comments.
+  - **Rating:** Users can rate recipes to share their opinions on quality.
+
+- **Additional Account Features**
+  - **Reset Password & Update Profile:** Users can reset their passwords via email and update their profile information, ensuring their account details remain current.
+
+- **Contact Form**
+  - **Communication:** Visitors can contact site admins with inquiries or issues via a contact form.
 
 
 ## Technology used
@@ -119,21 +292,88 @@ Welcome page
 - Google Fonts: Custom typography.
 - GitHub: Source code repository and project management.
 - Git: Version control for code management.
-- ChatGPT: create logo, images, content for the website and help during coding.\
+- ChatGPT: create logo, images, content for the website and help during coding.
 
 # Testing and validation
+
+## Python
+I used the CI Python Linter to check my Python files and addressed all the errors. The code now passes all checks successfully.
+I checked homepage, welcome page, sign in, sign out, sign up, recipe list, view recipe, edit recipe, preview recipe, create recipe, search, my recipes, my favorites, delete recipe.
+
+- views.py
+
+<img src="static/images/documentation/views_python_validator.png" alt="views_python_validator" width="650">
+
+- models.py
+
+<img src="static/images/documentation/models_python_validator.png" alt="models_python_validator" width="650">
+
+- forms.py
+
+<img src="static/images/documentation/forms_python_validator.png" alt="forms_python_validator" width="650">
+
+- admin.py
+
+<img src="static/images/documentation/admin_python_validator.png" alt="admin_python_validator" width="650">
+
+- urls.py
+
+<img src="static/images/documentation/urls_python_validator.png" alt="urls_python_validator" width="650">
+
+## CSS
+I used the W3 CSS Validator to check my CSS file and addressed all the errors. The code now passes all checks successfully.
+
+<img src="static/images/documentation/css_validator.png" alt="css_validator" width="650">
+
+## HTML
+I used the W3 HTML Validator to check my html files and addressed all the errors. The code now passes all checks successfully.
+
+<img src="static/images/documentation/homepage_html_validator.png" alt="html_validator" width="650">
+
+<img src="static/images/documentation/welcome_html_validator.png" alt="html_validator" width="650">
+
+<img src="static/images/documentation/signin_html_validator.png" alt="html_validator" width="650">
+
+<img src="static/images/documentation/signout_html_validator.png" alt="html_validator" width="650">
+
+<img src="static/images/documentation/signup_html_validator.png" alt="html_validator" width="650">
+
+<img src="static/images/documentation/recipe_list_html_validator.png" alt="html_validator" width="650">
+
+<img src="static/images/documentation/view_recipe_html_validator.png" alt="html_validator" width="650">
+
+<img src="static/images/documentation/create_recipe_html_validator.png" alt="html_validator" width="650">
+
+<img src="static/images/documentation/edit_recipe_html_validator.png" alt="html_validator" width="650">
+
+<img src="static/images/documentation/delete__recipe_html_validator.png" alt="html_validator" width="650">
+
+<img src="static/images/documentation/preview_recipe_html_validator.png" alt="html_validator" width="650">
+
+<img src="static/images/documentation/search_html_validator.png" alt="html_validator" width="650">
+
+<img src="static/images/documentation/my_favorites__html_validator.png" alt="html_validator" width="650">
+
+<img src="static/images/documentation/my_recipes_html_validator.png" alt="html_validator" width="650">
+
+## JS
+I used the JS Hint Validator to check my JS code and there were no errors.
+
+<img src="static/images/documentation/js_validator.png" alt="js_validator" width="650">
 
 ##  Responsiveness
 I used the Website Mockup Generator to test the website for responsivness
 
+I used Lighhouse to generate report:
+
+
 **Laptop**
-![Screenshot of homepage view on laptop](/static/images/documentation/laptop.png)
+<img src="static/images/documentation/laptop.png" alt="html_validator" width="450">
 
 **Tablet**
-![Screenshot of homepage view on tablet](/static/images/documentation/tablet-black.png)
+<img src="static/images/documentation/tablet-black.png" alt="html_validator" width="350">
 
 **Mobile**
-![Screenshot of homepage view on mobile](/static/images/documentation/mobile-black.png)
 
 # Bugs and Issues
 
@@ -147,6 +387,8 @@ Connected Code Institute PostGres Database
 
 # Credits and acknowledgements
 I would like to thank the following individuals and resources for their support and inspiration during this project:
+- **Color palettes**: for creating a color palette for the project. [Color palette](https://colorpalettes.net/color-palette-2314/).
+- **Design Your Way**: for information about fonts. [Fonts](https://www.designyourway.net/blog/bodoni-font-pairing/)
 - **Code Institute LMS Content**: For providing the educational materials that guided my learning process.
 - **Course Facilitators**: Special thanks to Alexander and David Calikes for their support and  guidance.
 - **Tutor Kevin Loughrey**: His SME sessions were important in shaping my approach and were a key resource throughout the project.

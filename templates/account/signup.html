@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load i18n %}
+{% load crispy_forms_tags %}
 {% load account %}
 
 {% block head_title %}{% trans "Sign Up" %}{% endblock %}
@@ -19,17 +20,37 @@
                     <!-- Check if the user already has an account and redirect to Sign in-->
                     <p class="text-center mb-4">
                         {% blocktrans %}Already have an account?{% endblocktrans %}
-                        <a href="{{ login_url }}" class="text-primary">{% trans "Sign in" %}</a>.
+                        <a href="{{ login_url }}" class="text-primary">{% trans "Sign In" %}</a>.
                     </p>
                     
                     <!-- Submit form -->
                     <form class="signup" id="signup_form" method="POST" action="{% url 'account_signup' %}">
                         {% csrf_token %}
-                        {{ form.as_p }}
 
-                        {% if redirect_field_value %}
-                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-                        {% endif %}
+                        <div class="form-group mb-3">
+                            {{ form.username.label_tag }}
+                            {{ form.username }}
+                            {{ form.username.errors }}
+                        </div>
+                        <div class="form-group mb-3">
+                            {{ form.email.label_tag }}
+                            {{ form.email }}
+                            {{ form.email.errors }}
+                        </div>
+                        <div class="form-group mb-3">
+                            {{ form.password1.label_tag }}
+                            {{ form.password1 }}
+                            <div class="form-tex text-muted mt-3">
+                                Password must contain at least 8 characters, cannot be entirely numeric, 
+                                and cannot be too similar to your personal information.
+                            </div>
+                            {{ form.password1.errors }}
+                        </div>
+                        <div class="form-group mb-3">
+                            {{ form.password2.label_tag }}
+                            {{ form.password2 }}
+                            {{ form.password2.errors }}
+                        </div>
 
                         <!-- Submit button -->
                         <div class="text-center">
@@ -44,15 +65,16 @@
 
 <!-- JavaScript to check password mismatch in Password and Password (again) -->
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const form = document.getElementById('signup_form');
-        const password1 = document.getElementById('id_password1');
-        const password2 = document.getElementById('id_password2');
+    document.addEventListener("DOMContentLoaded", function () {
+        var form = document.getElementById("signup_form");
+        var password1 = document.getElementById("id_password1");
+        var password2 = document.getElementById("id_password2");
 
-        form.addEventListener('submit', function (event) {
+        // Password mismatch check
+        form.addEventListener("submit", function (event) {
             if (password1.value !== password2.value) {
-                event.preventDefault(); // Prevent form submission
-                alert('Passwords do not match'); // Show an alert box with the error message
+                event.preventDefault();
+                alert("Passwords do not match");
             }
         });
     });
