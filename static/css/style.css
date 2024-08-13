@@ -134,7 +134,7 @@ main {
 /* General cards style */
 .card {
     display: block; 
-    visibility: visible; /
+    visibility: visible; 
     opacity: 1; 
     margin-top: 1rem;
     border: 1px solid var(--primary-medium-green); 
@@ -210,7 +210,7 @@ main {
     font-family: 'Montserrat', sans-serif;
     color: var(--primary-dark-green);
     padding: 0.75rem 0; 
-    margin-left: 0; /
+    margin-left: 0; 
 }
 
 .content-box {
@@ -273,53 +273,53 @@ p {
 /* Flash messages */
 .alert-success {
     background-color: var(--primary-medium-green);
-    border-color: var(--primary-medium-green);
+    border: none;
     color: var(--primary-light-green);
     border-radius: 10px; 
 }
 
 .alert-danger {
     background-color: var(--accent-dark-violet);
-    border-color: var(--accent-dark-violet);
+    border: none;
     color: var(--primary-light-green);
     border-radius: 10px; 
 }
 
 .alert-info {
     background-color: var(--primary-light-green);
-    border-color: var(--primary-light-green);
+    border: none;
     color: var(--primary-dark-green); 
     border-radius: 10px; 
 }
 
 .alert-warning {
     background-color: var(--accent-pink);
-    border-color: var(--accent-pink);
+    border: none;
     color: var(--accent-dark-violet); 
     border-radius: 10px; 
 }
 
 /* Logged-in message adjastments */
 p.logged-in-message {
-    margin: 0; !important;   
-    padding: 0; !important;   
-    line-height: 1; !important;   
-    color: var(--primary-dark-green);
-    font-size: 0.9rem;  
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 1 !important;
+    color: var(--primary-dark-green) !important;
+    font-size: 0.9rem;
     font-family: 'Montserrat', sans-serif;
     display: inline-block;
-    position: absolute;  
-    top: 0.5rem;  
-    right: 0; 
-    z-index: 100; 
-    text-align: right;  
-    margin-bottom: 0.5rem; !important;
+    position: absolute;
+    top: 0.5rem;
+    right: 1.5rem;
+    z-index: 100;
+    text-align: right;
+    margin-bottom: 0.5rem !important;
 }
 
 /* Pagnation controls style */
 .pagination {
-    margin-top: 1rem;  
-    margin-bottom: 1rem;  
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
 .pagination .page-item .page-link {
@@ -331,19 +331,19 @@ p.logged-in-message {
 
 .pagination .page-item.active .page-link {
     background-color: var(--primary-medium-green);
-    border-color: var(--primary-medium-green);
+    border: none;
     color: white;
 }
 
 .pagination .page-item .page-link:hover {
     background-color: var(--accent-dark-violet);
     color: white;
-    border-color: var(--accent-dark-violet);
+    border: none;
 }
 
 /* Style for tags */
 .badge-primary {
-    background-color: var(--primary-dark-green); 
+    background-color: var(--primary-dark-green);
     color: white;
     margin-right: 5px;
 }
@@ -364,10 +364,10 @@ p.logged-in-message {
     background-color: var(--primary-medium-green);
     border: none;
     color: white;
-    width: 80%;  
+    width: 80%;
     max-width: 12.5rem;
-    display: block;  
-    margin: 0 auto;  
+    display: block;
+    margin: 0 auto;
 }
 
 .btn-green:hover {
@@ -380,25 +380,25 @@ p.logged-in-message {
     background-color: var(--accent-pink);
     border: none;
     color: white;
-    width: 80%;  
-    max-width: 12.5rem;  
-    display: block;  
-    margin: 0 auto; 
+    width: 80%;
+    max-width: 12.5rem;
+    display: block;
+    margin: 0 auto;
 }
 
 .btn-pink:hover {
-    background-color: var(--accent-dark-violet); 
-    color: white;               
-} 
+    background-color: var(--accent-dark-violet);
+    color: white;
+}
  
 /* Red button (extends .btn) */
 .btn-danger {
     background-color: #dc3545;
     color: white;
-    width: 80%;  
+    width: 80%;
     max-width: 12.5rem;
-    display: block;  
-    margin: 0 auto; 
+    display: block;
+    margin: 0 auto;
 }
 
 .btn-danger:hover {
@@ -415,5 +415,5 @@ p.logged-in-message {
 .btn-outline-success:hover, .btn-outline-success:focus {
     background-color: white;
     color: var(--primary-medium-green);
-    border-radius: 15px; 
+    border-radius: 15px;
 }

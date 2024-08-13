@@ -265,12 +265,39 @@ Welcome page
 
 # Testing and validation
 
-I used the CI Python Linter to check the my python code:
+## Python
+I used the CI Python Linter to check my Python files and addressed all the errors. The code now passes all checks successfully.
+
 - views.py
 
-<img src="static/images/documentation/python_validator.png" alt="python_validator" width="650">
+<img src="static/images/documentation/views_python_validator.png" alt="views_python_validator" width="650">
 
 - models.py
+
+<img src="static/images/documentation/models_python_validator.png" alt="models_python_validator" width="650">
+
+- forms.py
+
+<img src="static/images/documentation/forms_python_validator.png" alt="forms_python_validator" width="650">
+
+- admin.py
+
+<img src="static/images/documentation/admin_python_validator.png" alt="admin_python_validator" width="650">
+
+- urls.py
+
+<img src="static/images/documentation/urls_python_validator.png" alt="urls_python_validator" width="650">
+
+## CSS
+I used the W3 CSS Validator to check my CSS file and addressed all the errors. The code now passes all checks successfully.
+
+<img src="static/images/documentation/css_validator.png" alt="css_validator" width="650">
+
+## HTML
+I used the W3 CSS Validator to check my html files and addressed all the errors. The code now passes all checks successfully.
+
+<img src="static/images/documentation/css_validator.png" alt="css_validator" width="650">
+
 
 ##  Responsiveness
 I used the Website Mockup Generator to test the website for responsivness

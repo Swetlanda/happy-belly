@@ -13,32 +13,35 @@
                     <h3 class="card-title-green">Preview Your Recipe</h3>
                 </div>
 
-                <!-- Recipe details -->
+                <!-- Recipe details. Added |linebreaksbr filter to handle line breaks -->
                 <div class="card-body">
                     <h5 class="card-title-green">{{ preview_data.title }}</h5>
-                    <p class="card-text">{{ preview_data.description }}</p>
-                    <p class="card-text"><strong>Ingredients:</strong>{{ preview_data.ingredients }}</p>
-                    <p class="card-text"><strong>Instructions:</strong>{{ preview_data.instructions }}</p>
-                    <p class="card-text"><strong>Serving:</strong>{{ preview_data.serving }}</p>
-                    <p class="card-text"><strong>Tags:</strong>{{ preview_data.tags }}</p>
+                    <p class="card-text">{{ preview_data.description|linebreaksbr }}</p>
+                    <p class="card-text"><strong>Ingredients: </strong>{{ preview_data.ingredients|linebreaksbr }}</p>
+                    <p class="card-text"><strong>Instructions: </strong>{{ preview_data.instructions|linebreaksbr }}</p>
+                    <p class="card-text"><strong>Serving: </strong>{{ preview_data.serving }}</p>
+                    <p class="card-text"><strong>Tags: </strong>{{ preview_data.tags }}</p>
 
-                <!-- Recipe image if there is one or default image-->
+                    <!-- Recipe image if there is one or default image-->
                     {% if preview_data.image_url %}
-                        <img src="{{ preview_data.image_url }}" alt="{{ preview_data.image_alt }}" class="img-fluid rounded">
+                    <img src="{{ preview_data.image_url }}" alt="{{ preview_data.image_alt }}"
+                        class="img-fluid rounded">
                     {% else %}
-                        <img src="{% static 'images/default.jpg' %}" alt="Image of cooking" class="img-fluid rounded">
+                    <img src="{% static 'images/default.jpg' %}" alt="Image of cooking" class="img-fluid rounded">
                     {% endif %}
+                </div>
 
                 <!-- Action buttons -->
-                </div>
-                <div class="card-footer text-center">
-                    <form method="POST">
-                        {% csrf_token %}
-                        <div class="d-flex flex-column flex-md-row justify-content-center">
-                            <button type="submit" name="confirm" class="btn btn-pink mb-2 mb-md-0 md-2">Submit for Approval</button>
-                            <button type="submit" name="edit" class="btn btn-green mb-2 mb-md-0 md-2">Edit Again</button>
-                    </form>
-                </div>
+            </div>
+            <div class="card-body text-center">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="d-flex flex-column flex-md-row justify-content-center">
+                        <button type="submit" name="confirm" class="btn btn-pink mb-2 mb-md-0 md-2">Submit for
+                            Approval</button>
+                        <button type="submit" name="edit" class="btn btn-green mb-2 mb-md-0 md-2">Edit Again</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

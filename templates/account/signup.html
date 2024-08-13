@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load i18n %}
+{% load crispy_forms_tags %}
 {% load account %}
 
 {% block head_title %}{% trans "Sign Up" %}{% endblock %}
@@ -19,12 +20,17 @@
                     <!-- Check if the user already has an account and redirect to Sign in-->
                     <p class="text-center mb-4">
                         {% blocktrans %}Already have an account?{% endblocktrans %}
-                        <a href="{{ login_url }}" class="text-primary">{% trans "Sign in" %}</a>.
+                        <a href="{{ login_url }}" class="text-primary">{% trans "Sign In" %}</a>.
                     </p>
                     
                     <!-- Submit form -->
                     <form class="signup" id="signup_form" method="POST" action="{% url 'account_signup' %}">
                         {% csrf_token %}
+
+                        <!-- Render non-field errors if any -->
+                        {{ form.non_field_errors }}
+
+                        <!-- Render the form fields as paragraphs -->
                         {{ form.as_p }}
 
                         {% if redirect_field_value %}

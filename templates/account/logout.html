@@ -5,35 +5,33 @@
 {% block head_title %}{% trans "Sign Out" %}{% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="container mt-4">
-        <div class="row">
-            <div class="col-md-8 offset-md-2 mb-4">
-                <div class="card shadow">
-                    <div class="card-header card-header-custom text-center">
-                        <h3 class="card-title-green">{% trans "Sign Out" %}</h3>
-                    </div>
-                    <div class="card-body">
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2 mb-4">
+            <div class="card shadow">
+                <div class="card-header card-header-custom text-center">
+                    <h3 class="card-title-green">{% trans "Sign Out" %}</h3>
+                </div>
+                <div class="card-body">
+                    <!-- Sign out form -->
+                    <p class="text-center mb-4">{% trans 'Are you sure you want to sign out?' %}</p>
+                    <form method="POST" action="{% url 'account_logout' %}">
+                        {% csrf_token %}
+                        {% if redirect_field_value %}
+                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                        {% endif %}
+                        <div class="text-center">
+                            <button class="btn btn-pink btn-lg" type="submit">{% trans 'Sign Out' %}</button>
+                        </div>
+                    </form>
+                </div>
 
-                        <!-- Sign out form -->
-                        <p class="text-center mb-4">{% trans 'Are you sure you want to sign out?' %}</p>
-                        <form method="POST" action="{% url 'account_logout' %}">
-                            {% csrf_token %}
-                            {% if redirect_field_value %}
-                            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-                            {% endif %}
-                            <div class="text-center">
-                                <button class="btn btn-pink btn-lg" type="submit">{% trans 'Sign Out' %}</button>
-                            </div>
-                        </form>
-                    </div>
-
-                    <!-- Link to homepage -->
-                    <div class="card-footer text-center">
-                        <p>{% trans "Changed your mind?" %} <a href="{% url 'home' %}" class="text-primary">{% trans "Go back to homepage" %}</a></p>
-                    </div>
+                <!-- Link to homepage -->
+                <div class="card-footer text-center">
+                    <p>{% trans "Changed your mind?" %} <a href="{% url 'home' %}" class="text-primary">{% trans "Go back to homepage" %}</a></p>
                 </div>
             </div>
         </div>
     </div>
-    {% endblock %}
+</div>
+{% endblock %}
