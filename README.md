@@ -9,11 +9,11 @@ Welcome to Happy Belly Recipes – a responsive website where users can find eas
 This website was created as a portfolio project for the Full-Stack Software Development Programme by the Code Institute .
 
 # Table of Contents
-- Purpose and Target Audience
+- Purpose and target audience
 - UX
-- Agile Development
+- Agile development
 - Features implemented
-- Features Left to Implement
+- Features for future development
 - Technology used
 - Testing and validation
 - Bugs
@@ -146,7 +146,6 @@ I organised all user stories into Epics and defined acceptance criteria for each
 - **Testing**: As a site visitor, I want to click on all links without errors **(MUST)**.
   - AC1: As a site visitor, I can click on all links and all work fine without errors.
 
-
 ## Design
 
 ### Wireframes
@@ -154,33 +153,41 @@ The Happy Belly recipes website is designed with Bootstrap to allow for responsi
 
 I used Balsamiq to create the wireframes. They were served as initial thnking and evolved during the build in line with Agile methodology.
 
-**Homepage:** <br/>
-<img src="static/images/documentation/homepage_desktop.png" alt="wireframe_homepage_desktop" width="650">
+
+**Homepage:** 
+
+<img src="static/images/documentation/homepage_desktop.png" alt="wireframe_homepage_desktop" width="600">
 <img src="static/images/documentation/homepage_mobile.png" alt="wireframe_homepage_mobile" width="200">    
 
-**Welcome page:** <br/>
-<img src="static/images/documentation/welcome_desktop.png" alt="wireframe_welcome_desktop" width="650">
+
+**Welcome page:** 
+
+<img src="static/images/documentation/welcome_desktop.png" alt="wireframe_welcome_desktop" width="600">
 <img src="static/images/documentation/welcome_mobile.png" alt="wireframe_welcome_mobile" width="200">    
 
-**List of recipes:**<br/> 
-<img src="static/images/documentation/recipes_list_desktop.png" alt="wireframe_recipes_list_desktop" width="650">
+
+**List of recipes:**
+
+<img src="static/images/documentation/recipes_list_desktop.png" alt="wireframe_recipes_list_desktop" width="600">
 <img src="static/images/documentation/recipes_list_mobile.png" alt="wireframe_recipes_list_mobile" width="200">  
 
-**View recipe:**<br/> 
-<img src="static/images/documentation/view_recipe_desktop.png" alt="wireframe_view_recipe_desktop" width="650">
+
+**View recipe:**
+
+<img src="static/images/documentation/view_recipe_desktop.png" alt="wireframe_view_recipe_desktop" width="600">
 <img src="static/images/documentation/view_recipe_mobile.png" alt="wireframe_view_recipe_mobile" width="200"> 
 
 
 ### Color palette
 I created the following color palette for the project, using bright, vivid colors with strong contrast to ensure the design is visually appealing and provides a positive user experience.
 
-<img src="static/images/documentation/color_palette.png" alt="color-palette" width="650">
+<img src="static/images/documentation/color_palette.png" alt="color-palette" width="600">
 
 
 ### Typography
 I used the Google fonts Montserrat and Bodoni Moda for consistent typography across the site.
 
-<img src="static/images/documentation/fonts.png" alt="fonts" width="650">
+<img src="static/images/documentation/fonts.png" alt="fonts" width="600">
 
 ### Branding
 I created the logo for Happy Belly recipe with the use of ChatCPT.
@@ -235,17 +242,41 @@ The following User Stories were not completed during this project and are left f
   - AC1: A visitor can fill out a contact form with their inquiry.
   - AC2: The message is sent to the site admins.
 
-### Features
-- Recipe listing:
-	- Recipes are displayed as cards with an image, title, description, tags, user and posting date.
-	- Recipe listings are paginated by 8 to improve loading times and user experience, with navigation controls for easy browsing.
-	- Each recipe card is clickable, leading to a full detailed view of the recipe.
-	
-Welcome page
 
-- Search:
-	- Users can search for recipes by title, description, ingredients, or tags.
+# Features Implemented
 
+- **Homepage**
+  - **Structure:** The homepage includes a navbar, hero section with a clear CTA, and a footer. The main content features a hero image with a "Sign Up" button and a brief description of the website's purpose and registration benefits.
+
+- **User Account Management**
+  - **User Registration & Login:** Visitors can create an account with a username, log in securely, and manage their recipes.
+  - **Welcome Page:** After registration, users see a personalized welcome message with links to create a recipe, view their recipes, and access their favorites.
+
+- **Recipe Management**
+  - **Recipe Listings:** Recipes are displayed as paginated cards with images, titles, descriptions, and tags. All users can view the listings, and each card links to a detailed recipe view.
+  - **Create, Edit, & Delete Recipes:** Logged-in users can create, update, or delete their recipes using simple forms. Recipes are sent for admin approval before publishing.
+
+- **Search & Favorites**
+  - **Search:** Users can search for recipes by title, description, ingredients, or tags via a search bar in the navigation.
+  - **Favorites:** Logged-in users can mark recipes as favorites and view their favorited recipes on a dedicated page.
+
+- **Administrative Controls**
+  - **Manage Recipes:** Admins can create, view, update, or delete any recipe, ensuring proper content management across the site.
+
+- **Documentation & Links**
+  - **Readme & Links:** The project includes comprehensive documentation in a Readme file. All links on the site are functional, ensuring a smooth user experience.
+
+# Features for Future Development
+
+- **Commenting & Rating**
+  - **Comments:** Logged-in users can comment on recipes, read others' comments, and engage in discussions. They can also edit or delete their comments.
+  - **Rating:** Users can rate recipes to share their opinions on quality.
+
+- **Additional Account Features**
+  - **Reset Password & Update Profile:** Users can reset their passwords via email and update their profile information, ensuring their account details remain current.
+
+- **Contact Form**
+  - **Communication:** Visitors can contact site admins with inquiries or issues via a contact form.
 
 
 ## Technology used
@@ -267,6 +298,7 @@ Welcome page
 
 ## Python
 I used the CI Python Linter to check my Python files and addressed all the errors. The code now passes all checks successfully.
+I checked homepage, welcome page, sign in, sign out, sign up, recipe list, view recipe, edit recipe, preview recipe, create recipe, search, my recipes, my favorites, delete recipe.
 
 - views.py
 
@@ -294,22 +326,54 @@ I used the W3 CSS Validator to check my CSS file and addressed all the errors. T
 <img src="static/images/documentation/css_validator.png" alt="css_validator" width="650">
 
 ## HTML
-I used the W3 CSS Validator to check my html files and addressed all the errors. The code now passes all checks successfully.
+I used the W3 HTML Validator to check my html files and addressed all the errors. The code now passes all checks successfully.
 
-<img src="static/images/documentation/css_validator.png" alt="css_validator" width="650">
+<img src="static/images/documentation/homepage_html_validator.png" alt="html_validator" width="650">
 
+<img src="static/images/documentation/welcome_html_validator.png" alt="html_validator" width="650">
+
+<img src="static/images/documentation/signin_html_validator.png" alt="html_validator" width="650">
+
+<img src="static/images/documentation/signout_html_validator.png" alt="html_validator" width="650">
+
+<img src="static/images/documentation/signup_html_validator.png" alt="html_validator" width="650">
+
+<img src="static/images/documentation/recipe_list_html_validator.png" alt="html_validator" width="650">
+
+<img src="static/images/documentation/view_recipe_html_validator.png" alt="html_validator" width="650">
+
+<img src="static/images/documentation/create_recipe_html_validator.png" alt="html_validator" width="650">
+
+<img src="static/images/documentation/edit_recipe_html_validator.png" alt="html_validator" width="650">
+
+<img src="static/images/documentation/delete__recipe_html_validator.png" alt="html_validator" width="650">
+
+<img src="static/images/documentation/preview_recipe_html_validator.png" alt="html_validator" width="650">
+
+<img src="static/images/documentation/search_html_validator.png" alt="html_validator" width="650">
+
+<img src="static/images/documentation/my_favorites__html_validator.png" alt="html_validator" width="650">
+
+<img src="static/images/documentation/my_recipes_html_validator.png" alt="html_validator" width="650">
+
+## JS
+I used the JS Hint Validator to check my JS code and there were no errors.
+
+<img src="static/images/documentation/js_validator.png" alt="js_validator" width="650">
 
 ##  Responsiveness
 I used the Website Mockup Generator to test the website for responsivness
 
+I used Lighhouse to generate report:
+
+
 **Laptop**
-![Screenshot of homepage view on laptop](/static/images/documentation/laptop.png)
+<img src="static/images/documentation/laptop.png" alt="html_validator" width="450">
 
 **Tablet**
-![Screenshot of homepage view on tablet](/static/images/documentation/tablet-black.png)
+<img src="static/images/documentation/tablet-black.png" alt="html_validator" width="350">
 
 **Mobile**
-![Screenshot of homepage view on mobile](/static/images/documentation/mobile-black.png)
 
 # Bugs and Issues
 
