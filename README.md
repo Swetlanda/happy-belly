@@ -265,6 +265,13 @@ Welcome page
 
 # Testing and validation
 
+I used the CI Python Linter to check the my python code:
+- views.py
+
+<img src="static/images/documentation/python_validator.png" alt="python_validator" width="650">
+
+- models.py
+
 ##  Responsiveness
 I used the Website Mockup Generator to test the website for responsivness
 
