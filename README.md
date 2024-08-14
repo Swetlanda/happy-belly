@@ -208,7 +208,7 @@ The Kanban board was divided into the following columns:
 **Kanban board:**<br/> 
 <img src="static/images/documentation/project_board.png" alt="project_board" width="650"> 
 
-The following User Stories were not completed during this project and are left for future development.
+**The following User Stories were not completed during this project and are left for future development.**
 
 **Epic: Comment and rating (COULD)**
 - **Create a comment**: As a logged-in user, I want to leave comments on a recipe so that I can provide feedback or ask questions.
@@ -255,7 +255,7 @@ The following User Stories were not completed during this project and are left f
 
 - **User Account Management**
   - **User Registration & Login:** Visitors can create an account with a username, log in and log out securely, and manage their recipes.
-  - **Welcome Page:** After registration, users see a personalised welcome message with links to create a recipe, view their recipes, and access their favorites.
+  - **Welcome Page:** After registration, users see a personalised welcome message with links to create a recipe, view their recipes, and access their favorites recipes.
 
 
 <img src="static/images/documentation/signup.png" alt="signup" width="550">
@@ -268,10 +268,8 @@ The following User Stories were not completed during this project and are left f
 
 
 - **Recipe Management**
-  - **Recipe Listings:** Recipes are displayed as paginated cards with images, titles, descriptions, and tags. All users can view the listings, and each card links to a detailed recipe view.
-  recipea are paginated by 8 with buttons Prev/Next below to click to other pages.
-  - **Create, Edit, & Delete Recipes:** Logged-in users can create, update, or delete their recipes using simple forms. Recipes are sent for admin approval before publishing.
-
+  - **Recipe Listings:** Recipes are displayed as paginated cards with images, titles, descriptions, and tags. All users can view the listings, and each card links to a detailed recipe view. Recipes are displayed in sets of 8, with "Previous" and "Next" buttons available below to navigate between pages.  
+  - **Create, Edit, & Delete Recipes:** Logged-in users can create, update, or delete their recipes using the "Create Recipe" form. All new recipes are submitted for admin approval before being published. Users can preview their recipe before final submission, with the option to either submit it or return to editing for further adjustments. A default image is automatically added if no image is provided, ensuring each recipe has visual representation. Additionally, a slug is automatically generated based on the recipe title to create a user-friendly URL.
 
 <img src="static/images/documentation/recipes_list.png" alt="recipe_list" width="550">
 
@@ -288,7 +286,6 @@ The following User Stories were not completed during this project and are left f
 - **Search & Favorites**
   - **Search:** Users can search for recipes by title, description, ingredients, or tags using a search bar in the navigation.
   - **Favorites:** Logged-in users can mark recipes as favorites and view their favorited recipes on a dedicated page.
-
 
   <img src="static/images/documentation/favorites_my.png" alt="my_favorites" width="550">
 
@@ -472,21 +469,23 @@ I used the Website Mockup Generator to test the website for responsivness
 
 
 # Bugs and Issues
-- I plan to improve performace by suing teh correctly generated images rathen that jpg as currently.
-- I also had a bag related to tags that could appear in recipe description - they are related to Summernotes, I've tried to remove them but they could appear depdnding on how the infirmation is added to recipes. This shoudl be sfixed in future release.
+- I plan to improve performace by using the correctly generated images rather that jpgs as currently.
+- I discovered a bug related to tags appearing in the recipe description, ingredients, and instructions fields due to Summernote's handling. While I've implemented code to remove these tags, they may still appear depending on how the content is added. This will be addressed in a future release.
 
 <img src="static/images/documentation/bug_tags.png" alt="bug_tags" width="550">
 
+- The website should be also tested on different browsers and actual mobile phones to improve responsivness.
+
 # Deployment
 - I followed the Django Deployment Instructions 2024 provided by the Code Institute.
-- Repository was created in Git
-- Deployed to Heroku
-- Connected Secret Keys to config vars
-- Connected Code Institute PostGres Database
+- Repository was created in Git.
+- Deployed to Heroku with Debug = False.
+- Connected Secret Keys to config vars.
+- Connected Code Institute PostGres Database.
 
 
 # Resources
-- **Code Institute LMS**
+- **Code Institute LMS and SME sessions**
 - **Color palettes**: for creating a color palette for the project. [Color palette](https://colorpalettes.net/color-palette-2314/).
 - **Design Your Way**: for information about fonts. [Fonts](https://www.designyourway.net/blog/bodoni-font-pairing/)
 - **Techsini**: for creating mock ups. [Mock ups](https://techsini.com/multi-mockup/index.php)
@@ -501,11 +500,12 @@ I would like to thank the following individuals and resources for their support 
 - **Design Your Way**: for information about fonts. [Fonts](https://www.designyourway.net/blog/bodoni-font-pairing/)
 - **Code Institute LMS Content**: For providing the educational materials that guided my learning process.
 - **Course Facilitators**: Special thanks to Alexander and David Calikes for their support and  guidance.
-- **Tutor Kevin Loughrey**: His SME sessions were important in shaping my approach and were a key resource throughout the project.
+- **Tutor Kevin Loughrey**: His SME sessions were important in shaping my approach and were a key guidance throughout the project.
+- **Tutor Mark Briscoe**: For helping me to fix an error with Preview and Editing recipe.
 - **Rachel Cutler and the RecipMe Project**: Rachel's RecipMe project was a crucial reference for the structure and foundation of my work [RecipMe Django Cookbook](https://github.com/rachbry/recipme-django-cookbook/blob/main/README.md).
 - **Influential Projects**: I also drew inspiration from the following projects for building my ReadMe file:
   - [The Beara Directory Blog](https://github.com/Gordon-Meade/thebearadirectoryblog?tab=readme-ov-file#technology-used)
   - [Sojourn Scribbles V3](https://github.com/katiejanecoughlan/sojourn-scribbles-V3?tab=readme-ov-file#technology-used)
-- **ChatGPT**: was used for iamge and content generating, for buf fixing and answering my questions about coding, incuding some suggestions to my intial code.
+- **ChatGPT**: was used for image and content generating, for bug fixing and answering my questions about coding, including providing improvemenst to my intial code.
 - **Fontawesome**: was used for icons
-- **Balsamic** was used to creare wireframes
+- **Balsamic** was used to creare wireframes.

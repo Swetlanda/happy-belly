@@ -17,10 +17,10 @@ class RecipeAdmin(SummernoteModelAdmin):
 
     def get_queryset(self, request):
         """
-        Ensure that pending recipes are also shown in the admin view
+        Ensure that draft recipes are also shown in the admin view
         """
         queryset = super().get_queryset(request)
-        # Include recipes with both published (1) and pending (0) status
+        # Include recipes with both published (1) and draft (0) status
         return queryset.filter(status__in=[0, 1])
 
     def get_search_results(self, request, queryset, search_term):

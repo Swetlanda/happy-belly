@@ -164,8 +164,16 @@ def recipe_preview(request, recipe_id):
     if request.method == "POST":
         # If Confirm, save recipe and send to admin for approval
         if 'confirm' in request.POST:  # Submit for approval
+            # Assign the data from the Preview to the recipe object
+            if preview_data:
+                recipe.title = preview_data['title']
+                recipe.description = preview_data['description']
+                recipe.ingredients = preview_data['ingredients']
+                recipe.instructions = preview_data['instructions']
+                recipe.image_alt = preview_data['image_alt']
+
             recipe.status = 0  # Set status to pending for admin's approval
-            recipe.save()
+            recipe.save()  # Save the recipe to the database
             messages.success(
                 request,
                 "Your recipe has been sent to the admin for approval."
