@@ -269,7 +269,13 @@ The Kanban board was divided into the following columns:
 
 - **Recipe Management**
   - **Recipe Listings:** Recipes are displayed as paginated cards with images, titles, descriptions, and tags. All users can view the listings, and each card links to a detailed recipe view. Recipes are displayed in sets of 8, with "Previous" and "Next" buttons available below to navigate between pages.  
-  - **Create, Edit, & Delete Recipes:** Logged-in users can create, update, or delete their recipes using the "Create Recipe" form. All new recipes are submitted for admin approval before being published. Users can preview their recipe before final submission, with the option to either submit it or return to editing for further adjustments. A default image is automatically added if no image is provided, ensuring each recipe has visual representation. Additionally, a slug is automatically generated based on the recipe title to create a user-friendly URL.
+  - **Create, Edit, & Delete Recipes:** Logged-in users can create, update, or delete their recipes. 
+
+   - All new recipes are submitted for admin approval before being published.   
+   - Users can preview their recipe before final submission, with the option to either submit it or return to editing for further adjustments. 
+   - A default image is automatically added if no image is provided, ensuring each recipe has visual representation. 
+   - Additionally, a slug is automatically generated based on the recipe title to create a user-friendly URL.
+   - On the detailed recipe view page, logged-in users have access to "Edit" and "Delete" buttons, along with the option to add the recipe to their favorites with an "Add to Favorites" button.
 
 <img src="static/images/documentation/recipes_list.png" alt="recipe_list" width="550">
 
@@ -327,6 +333,8 @@ The Kanban board was divided into the following columns:
 I used the CI Python Linter to check my Python files and addressed all the errors. The code now passes all checks successfully.
 
 I checked homepage, welcome page, sign in, sign out, sign up, recipe list, view recipe, edit recipe, preview recipe, create recipe, search, my recipes, my favorites, delete recipe.
+
+- I discovered an error with editing recipes, which I fixed with Mark's help just before submission. Afterward, I re-checked the admin and views pages using the Pep8ci validator and found no issues. However, the screenshots below from these two pages are now outdated.
 
 - views.py
 
@@ -470,7 +478,7 @@ I used the Website Mockup Generator to test the website for responsivness
 
 # Bugs and Issues
 - I plan to improve performace by using the correctly generated images rather that jpgs as currently.
-- I discovered a bug related to tags appearing in the recipe description, ingredients, and instructions fields due to Summernote's handling. While I've implemented code to remove these tags, they may still appear depending on how the content is added. This will be addressed in a future release.
+- I discovered a bug related to tags appearing in the recipe description, ingredients, and instructions fields due to Summernote's handling. While I've implemented code to remove these tags, they may still appear depending on how the content is added. If these tags do appear, they could trigger HTML validation errors related to improperly closed or opened tags. At the time of submission, I checked the pages and found no errors. This issue will be addressed in a future release.
 
 <img src="static/images/documentation/bug_tags.png" alt="bug_tags" width="550">
 
