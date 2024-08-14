@@ -131,6 +131,11 @@ def store_preview_data_in_session(request, recipe):
     Stores recipe data in the session for preview purposes.
     This is used to pass data to the recipe Preview page.
     """
+    # Clear any existing preview data to avoid conflicts
+    request.session.pop('preview_data', None)
+    request.session.pop('preview_image', None)
+
+    # Store the latest data
     request.session['preview_data'] = {
         'title': recipe.title,
         'description': recipe.description,
@@ -141,6 +146,7 @@ def store_preview_data_in_session(request, recipe):
         'image_url': recipe.image.url if recipe.image else None,
         'image_alt': recipe.image_alt,
     }
+
     if recipe.image:
         request.session['preview_image'] = recipe.image.url
 
@@ -156,6 +162,7 @@ def recipe_preview(request, recipe_id):
     preview_data = request.session.get('preview_data', None)
 
     if request.method == "POST":
+        print(request.POST)
         # If Confirm, save recipe and send to admin for approval
         if 'confirm' in request.POST:  # Submit for approval
             recipe.status = 0  # Set status to pending for admin's approval
@@ -171,7 +178,8 @@ def recipe_preview(request, recipe_id):
             return redirect('edit_recipe', recipe_id=recipe.id)
 
     context = {
-        'preview_data': preview_data
+        'preview_data': preview_data,
+        'recipe': recipe   # Pass the recipe to ensure it’s used correctly
     }
     return render(request, 'recipes/recipe_preview.html', context)
 

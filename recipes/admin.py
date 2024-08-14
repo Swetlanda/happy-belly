@@ -15,6 +15,14 @@ class RecipeAdmin(SummernoteModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     summernote_fields = ('description', 'ingredients', 'instructions')
 
+
+     # Ensure that pending recipes are also shown in the admin view
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        # Include recipes with both published (1) and pending (0) status
+        return queryset.filter(status__in=[0, 1])
+
+
     def get_search_results(self, request, queryset, search_term):
         """
         Customises search in the admin to include results with tags.
@@ -27,9 +35,8 @@ class RecipeAdmin(SummernoteModelAdmin):
             queryset |= self.model.objects.filter(
                 tags__name__icontains=search_term
             )
-
         return queryset, use_distinct
-
+        
 
 class FavoriteAdmin(admin.ModelAdmin):
     """
