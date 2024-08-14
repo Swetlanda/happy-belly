@@ -162,7 +162,6 @@ def recipe_preview(request, recipe_id):
     preview_data = request.session.get('preview_data', None)
 
     if request.method == "POST":
-        print(request.POST)
         # If Confirm, save recipe and send to admin for approval
         if 'confirm' in request.POST:  # Submit for approval
             recipe.status = 0  # Set status to pending for admin's approval
