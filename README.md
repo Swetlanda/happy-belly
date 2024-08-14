@@ -255,11 +255,13 @@ The Kanban board was divided into the following columns:
 
 - **User Account Management**
   - **User Registration & Login:** Visitors can create an account with a username, log in and log out securely, and manage their recipes.
-  - **Welcome Page:** After registration, users see a personalised welcome message with links to create a recipe, view their recipes, and access their favorites recipes.
-
+   - I added a JS code to check if the passwords are matching during the Registration process.
 
 <img src="static/images/documentation/signup.png" alt="signup" width="550">
 
+<img src="static/images/documentation/passwords_check.png" alt="password_checks" width="550">
+
+  - **Welcome Page:** After registration, users see a personalised welcome message with links to create a recipe, view their recipes, and access their favorites recipes.
 
 <img src="static/images/documentation/welcome.png" alt="welcome" width="550">
 
