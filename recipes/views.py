@@ -131,6 +131,11 @@ def store_preview_data_in_session(request, recipe):
     Stores recipe data in the session for preview purposes.
     This is used to pass data to the recipe Preview page.
     """
+    # Clear any existing preview data to avoid conflicts
+    request.session.pop('preview_data', None)
+    request.session.pop('preview_image', None)
+
+    # Store the latest data
     request.session['preview_data'] = {
         'title': recipe.title,
         'description': recipe.description,
@@ -141,6 +146,7 @@ def store_preview_data_in_session(request, recipe):
         'image_url': recipe.image.url if recipe.image else None,
         'image_alt': recipe.image_alt,
     }
+
     if recipe.image:
         request.session['preview_image'] = recipe.image.url
 
@@ -158,8 +164,16 @@ def recipe_preview(request, recipe_id):
     if request.method == "POST":
         # If Confirm, save recipe and send to admin for approval
         if 'confirm' in request.POST:  # Submit for approval
+            # Assign the data from the Preview to the recipe object
+            if preview_data:
+                recipe.title = preview_data['title']
+                recipe.description = preview_data['description']
+                recipe.ingredients = preview_data['ingredients']
+                recipe.instructions = preview_data['instructions']
+                recipe.image_alt = preview_data['image_alt']
+
             recipe.status = 0  # Set status to pending for admin's approval
-            recipe.save()
+            recipe.save()  # Save the recipe to the database
             messages.success(
                 request,
                 "Your recipe has been sent to the admin for approval."
@@ -171,7 +185,8 @@ def recipe_preview(request, recipe_id):
             return redirect('edit_recipe', recipe_id=recipe.id)
 
     context = {
-        'preview_data': preview_data
+        'preview_data': preview_data,
+        'recipe': recipe   # Pass the recipe to ensure it’s used correctly
     }
     return render(request, 'recipes/recipe_preview.html', context)
 
